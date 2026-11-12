@@ -22,8 +22,9 @@ export function parseServiceAccount(raw: string): ServiceAccount {
   let data: Record<string, unknown>;
   try {
     data = JSON.parse(text) as Record<string, unknown>;
-  } catch (err) {
-    throw new Error(`không phải JSON (${(err as Error).message})`);
+  } catch {
+    // Không đưa message của JSON.parse vào lỗi: nó trích một đoạn giá trị (có thể là khoá bí mật).
+    throw new Error('không phải JSON hợp lệ');
   }
 
   const projectId = data.project_id ?? data.projectId;
