@@ -18,6 +18,7 @@ import { fileURLToPath } from 'url';
 import { build } from 'esbuild';
 import { nodeFileTrace } from '@vercel/nft';
 import helmet from 'helmet';
+import { parseAppletConfig } from '../server/lib/parseAppletConfig';
 // Không import tĩnh '../server/app': ESM hoist import lên trước mọi code, kéo theo
 // server/firebaseAdmin.ts đọc firebase-applet-config.json TRƯỚC khi bước 1 kịp ghi file
 // → ENOENT. Import động ở bước 4, sau khi config đã sẵn sàng.
@@ -45,8 +46,8 @@ if (!fs.existsSync(configPath)) {
     );
     process.exit(1);
   }
-  JSON.parse(fromEnv); // fail sớm nếu JSON hỏng
-  fs.writeFileSync(configPath, fromEnv);
+  // Chấp nhận JSON, ngoặc cong, hoặc nguyên đoạn code Firebase Console; ghi lại thành JSON chuẩn.
+  fs.writeFileSync(configPath, JSON.stringify(parseAppletConfig(fromEnv), null, 2));
   step('Đã ghi firebase-applet-config.json từ FIREBASE_APPLET_CONFIG');
 }
 

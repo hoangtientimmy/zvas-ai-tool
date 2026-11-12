@@ -5,13 +5,14 @@ import { initializeApp, cert, getApps, getApp } from 'firebase-admin/app';
 import type { AppOptions, ServiceAccount } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
+import { parseAppletConfig } from './lib/parseAppletConfig';
 
 const serverDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(serverDir, '..');
 
 // Serverless (Vercel) không có file config cạnh code đã bundle → ưu tiên biến môi
 // trường FIREBASE_APPLET_CONFIG (nội dung JSON y hệt file), fallback đọc file.
-const firebaseConfig = JSON.parse(
+const firebaseConfig = parseAppletConfig(
   process.env.FIREBASE_APPLET_CONFIG?.trim() ||
     fs.readFileSync(path.join(projectRoot, 'firebase-applet-config.json'), 'utf8')
 ) as { projectId: string; firestoreDatabaseId: string };
