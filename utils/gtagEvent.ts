@@ -1,5 +1,5 @@
 /**
- * GA4 (gtag) — chỉ gửi khi `import.meta.env.PROD` để tránh nhiễu property đơn lẻ G-W5YSHKJ7ZD.
+ * GA4 (gtag) — chỉ gửi khi `import.meta.env.PROD` và khi có `VITE_GA_MEASUREMENT_ID` (gtag được nạp trong vite.config.ts).
  * @see https://developers.google.com/analytics/devguides/collection/ga4/reference/events
  */
 

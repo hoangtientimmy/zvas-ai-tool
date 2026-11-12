@@ -6,10 +6,11 @@
 # Xem docs/06-live-deployment.md §0.
 set -euo pipefail
 
-PROJECT_ID="${PROJECT_ID:-zvas-ai-image}"
+PROJECT_ID="${PROJECT_ID:?Đặt PROJECT_ID=<gcp-project-id>}"
 REGION="${REGION:-us-west1}"
 AR_REPO="${AR_REPO:-app}"
-GITHUB_REPO="${GITHUB_REPO:-thanhnghiep1208/zVas-AI-Image}"
+CLOUD_RUN_SERVICE="${CLOUD_RUN_SERVICE:-ai-image-zvas}"
+GITHUB_REPO="${GITHUB_REPO:-hoangtientimmy/zvas-ai-tool}"
 DEPLOYER_SA_NAME="${DEPLOYER_SA_NAME:-github-deployer}"
 POOL_ID="${POOL_ID:-github}"
 PROVIDER_ID="${PROVIDER_ID:-github-oidc}"
@@ -109,7 +110,7 @@ Xong. Cấu hình GitHub (Settings → Secrets and variables → Actions), hoặ
 
   gh variable set GCP_PROJECT --repo $GITHUB_REPO --body '$PROJECT_ID'
   gh variable set GCP_REGION --repo $GITHUB_REPO --body '$REGION'
-  gh variable set CLOUD_RUN_SERVICE --repo $GITHUB_REPO --body 'ai-image-zvas'
+  gh variable set CLOUD_RUN_SERVICE --repo $GITHUB_REPO --body '$CLOUD_RUN_SERVICE'
   gh variable set AR_REPO --repo $GITHUB_REPO --body '$AR_REPO'
 
 Sau đó tạo Environment "production" trong repo (Settings → Environments).

@@ -58,3 +58,7 @@ coverage
 .agent/
 .cursor/
 graphify-out/
+.archify/
+
+# Vercel CLI / Build Output
+.vercel/

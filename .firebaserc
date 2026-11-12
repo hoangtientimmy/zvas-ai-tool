@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "zvas-ai-image"
+    "default": "your-firebase-project-id"
   }
 }
