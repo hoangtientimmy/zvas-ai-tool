@@ -18,7 +18,9 @@ import { fileURLToPath } from 'url';
 import { build } from 'esbuild';
 import { nodeFileTrace } from '@vercel/nft';
 import helmet from 'helmet';
-import { helmetOptions } from '../server/app';
+// Không import tĩnh '../server/app': ESM hoist import lên trước mọi code, kéo theo
+// server/firebaseAdmin.ts đọc firebase-applet-config.json TRƯỚC khi bước 1 kịp ghi file
+// → ENOENT. Import động ở bước 4, sau khi config đã sẵn sàng.
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = path.join(root, '.vercel/output');
@@ -106,6 +108,7 @@ fs.writeFileSync(
 );
 
 // 4) Header bảo mật cho file static — lấy đúng header helmet set cho Express production.
+const { helmetOptions } = await import('../server/app');
 const securityHeaders: Record<string, string> = {};
 helmet(helmetOptions(true))(
   {} as never,
