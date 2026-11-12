@@ -47,7 +47,7 @@ export function useHistoryImages(user: User | null) {
         }
       } else if (isFirestorePermissionDenied(error)) {
         console.warn(
-          'History fetch denied by Firestore rules. Deploy rules: firebase deploy --only firestore:rules --project zvas-ai-image',
+          'History fetch denied by Firestore rules. Deploy rules: firebase deploy --only firestore:rules',
         );
       } else {
         handleFirestoreError(error, OperationType.LIST, 'history');

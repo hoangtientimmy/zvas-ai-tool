@@ -40,6 +40,8 @@ Ngoài ra:
 | [14 - Nano Banana 2.1 10/2026](./14-nano-banana-2-1-2026-10.md) | Model mặc định 2.1, model ID GA, rollback, bỏ 512px |
 | [15 - Giảm lượt tạo thất bại 10/2026](./15-generation-failures-2026-10.md) | Retry/timeout Gemini, mã lỗi, phân tích lỗi |
 | [16 - Allowlist base URL 10/2026](./16-provider-baseurl-allowlist-2026-10.md) | Chặn rò key qua base URL, thực thi `enabledProviders` |
+| [17 - Deploy Vercel](./17-vercel-deployment.md) | Build Output API, biến môi trường, giới hạn so với Cloud Run |
+| [18 - Bàn giao: setup từ đầu](./18-handover-setup.md) | **Bắt đầu ở đây** khi nhận repo: Firebase mới, admin đầu tiên, biến cần điền |
 
 ## Tra nhanh
 
@@ -58,7 +60,7 @@ Ngoài ra:
 | Kiểm tra types | `npm run lint` |
 | Build frontend | `npm run build` |
 | Tests | `npm test` — mọi `*.test.ts` (248 test tại 29/10/2026) |
-| Deploy rules + indexes | `firebase deploy --only firestore:rules,firestore:indexes --project zvas-ai-image` (tay, trước khi merge nếu rules đổi) |
+| Deploy rules + indexes | `firebase deploy --only firestore:rules,firestore:indexes --project <PROJECT_ID>` (tay, trước khi merge nếu rules đổi) |
 | Deploy app | Merge PR vào `main` → GitHub Actions (`.github/workflows/deploy.yml`) |
 
 ## Quy ước khi sửa docs

@@ -12,8 +12,12 @@ import { classifyGenerationError, isGenerationErrorCode } from '../lib/generatio
  */
 const GENERATE_REQUEST_TIMEOUT_MS = 270_000;
 
-/** Trần body JSON của server là 10MB (`server.ts`); chừa chỗ cho prompt + JSON. */
-const MAX_REQUEST_IMAGE_BASE64_CHARS = 9.5 * 1024 * 1024;
+/**
+ * Vercel Functions giới hạn body request 4.5MB (thấp hơn trần 10MB của Express
+ * trong `server/app.ts`) — vượt là Vercel trả 413 trước khi tới server. Chừa chỗ
+ * cho prompt + JSON. Ảnh đã được nén về cạnh ≤2048px nên thường chỉ ~0.5–1.5MB/ảnh.
+ */
+const MAX_REQUEST_IMAGE_BASE64_CHARS = 4.2 * 1024 * 1024;
 
 type EncodedImage = { data: string; mimeType: string };
 

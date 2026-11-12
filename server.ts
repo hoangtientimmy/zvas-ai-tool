@@ -1,15 +1,14 @@
 // Sentry được init qua `node --import ./server/instrument.ts` (xem package.json
 // scripts `dev`/`start`) — bắt buộc với ESM để auto-instrumentation patch được
 // express/http trước khi module đó được import ở đây.
-import * as Sentry from '@sentry/node';
-
+//
+// Chạy dev local và Docker/Cloud Run. Trên Vercel không dùng file này — xem
+// server/vercelHandler.ts + scripts/build-vercel.ts.
 import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { registerApiRoutes } from './server/routes/index';
+import { createApp } from './server/app';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,89 +16,8 @@ dotenv.config({ path: path.join(__dirname, '.env.local') });
 dotenv.config({ path: path.join(__dirname, '.env') });
 
 async function startServer() {
-  const app = express();
+  const app = createApp();
   const PORT = Number(process.env.PORT) || 3000;
-
-  const isProd = process.env.NODE_ENV === 'production';
-  app.use(
-    helmet({
-      contentSecurityPolicy: isProd
-        ? {
-            directives: {
-              defaultSrc: ["'self'"],
-              // 'unsafe-inline' required for Vite module preload injections; tighten with hashes if needed
-              scriptSrc: ["'self'", "'unsafe-inline'", 'https://www.googletagmanager.com'],
-              scriptSrcElem: ["'self'", "'unsafe-inline'", 'https://www.googletagmanager.com'],
-              styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-              styleSrcElem: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-              imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
-              connectSrc: [
-                "'self'",
-                'https://*.googleapis.com',
-                'https://*.google.com',
-                'https://www.googletagmanager.com',
-                'https://www.google-analytics.com',
-                'https://analytics.google.com',
-                'https://api.openai.com',
-                'https://*.bytepluses.com',
-                'https://api.seedance.com',
-                // Sentry error/tracing beacons (ingest host phụ thuộc region của DSN).
-                'https://*.sentry.io',
-              ],
-              fontSrc: ["'self'", 'data:', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
-              frameSrc: ["'none'"],
-              objectSrc: ["'none'"],
-              baseUri: ["'self'"],
-              formAction: ["'self'"],
-            },
-          }
-        : false,
-    })
-  );
-
-  const allowedOriginsEnv = process.env.ALLOWED_ORIGINS;
-  if (isProd && !allowedOriginsEnv) {
-    console.warn(
-      '[WARN] ALLOWED_ORIGINS is not set — all cross-origin requests are blocked in production. ' +
-        'Set ALLOWED_ORIGINS=https://your-domain.com to allow browser clients.'
-    );
-  }
-  app.use(
-    cors({
-      origin: allowedOriginsEnv
-        ? (origin, cb) => {
-            const list = allowedOriginsEnv.split(',').map((o) => o.trim());
-            cb(null, !origin || list.includes(origin));
-          }
-        : isProd
-          ? false
-          : true,
-      credentials: true,
-    })
-  );
-  app.use(express.json({ limit: '10mb' }));
-  app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-  app.use((err: unknown, _req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const entityErr = err as { type?: string };
-    if (entityErr?.type === 'entity.too.large') {
-      return res.status(413).json({
-        error: 'Request payload too large. Please use a smaller image or compress before upload.',
-      });
-    }
-    if (err instanceof SyntaxError && 'body' in err) {
-      return res.status(400).json({ error: 'Invalid JSON payload.' });
-    }
-    return next(err);
-  });
-
-  app.get('/_health', (_req, res) => {
-    res.json({ status: 'ok' });
-  });
-
-  registerApiRoutes(app);
-
-  // Phải đăng ký sau routes để bắt được lỗi từ chúng, và trước fallback SPA/static.
-  Sentry.setupExpressErrorHandler(app);
 
   if (process.env.NODE_ENV !== 'production') {
     const { createServer: createViteServer } = await import('vite');

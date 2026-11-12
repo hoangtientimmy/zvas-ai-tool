@@ -3,7 +3,7 @@
 ## 0) Pre-check
 
 - Confirm active project/service:
-  - Project: `zvas-ai-image`
+  - Project: `<PROJECT_ID>`
   - Region: `us-west1`
   - Service: `ai-image-zvas`
 - Ensure local checks pass:
@@ -11,7 +11,7 @@
   - `npm run build`
   - `npm test` (toàn bộ `*.test.ts`)
 - Mặc định các bước này do job `check` của GitHub Actions chạy trên mọi PR — chạy tay khi deploy dự phòng.
-- Repo đã có `firebase.json` + `.firebaserc` + `firestore.indexes.json` — chạy lệnh Firebase từ **thư mục gốc** dự án (`zvas-ai-image`).
+- Repo đã có `firebase.json` + `.firebaserc` + `firestore.indexes.json` — chạy lệnh Firebase từ **thư mục gốc** dự án.
 - Local dev tạo user qua Admin API: có `service-account.json` (đúng tên, không khoảng trắng đầu file) — xem `docs/08-auth-users-setup.md`.
 
 ---
@@ -23,10 +23,10 @@
 Từ thư mục chứa `firebase.json`:
 
 ```bash
-firebase deploy --only firestore:rules --project zvas-ai-image
+firebase deploy --only firestore:rules --project <PROJECT_ID>
 ```
 
-Hoặc không cài global: `npx firebase-tools@latest deploy --only firestore:rules --project zvas-ai-image`
+Hoặc không cài global: `npx firebase-tools@latest deploy --only firestore:rules --project <PROJECT_ID>`
 
 Rules được gắn với database id trong `firebase.json` (trùng `firestoreDatabaseId` trong `firebase-applet-config.json`).
 
@@ -35,7 +35,7 @@ Sau refactor 05/2026: deploy rules nếu có thay đổi `rate_limit_windows` (c
 Sau tính năng phiên đăng nhập: deploy rules + index subcollection `users/{uid}/sessions` (collection group `sessions`).
 
 ```bash
-firebase deploy --only firestore:rules,firestore:indexes --project zvas-ai-image
+firebase deploy --only firestore:rules,firestore:indexes --project <PROJECT_ID>
 ```
 
 ---
@@ -45,16 +45,16 @@ firebase deploy --only firestore:rules,firestore:indexes --project zvas-ai-image
 Enable API (one-time):
 
 ```bash
-gcloud services enable secretmanager.googleapis.com --project zvas-ai-image
+gcloud services enable secretmanager.googleapis.com --project <PROJECT_ID>
 ```
 
 Create or rotate secrets:
 
 ```bash
-echo -n 'YOUR_GEMINI_API_KEY' | gcloud secrets versions add GEMINI_API_KEY --data-file=- --project zvas-ai-image
-echo -n 'YOUR_OPENAI_API_KEY' | gcloud secrets versions add OPENAI_API_KEY --data-file=- --project zvas-ai-image
-echo -n 'YOUR_SEEDANCE_API_KEY' | gcloud secrets versions add SEEDANCE_API_KEY --data-file=- --project zvas-ai-image
-echo -n 'YOUR_SEEDREAM_API_KEY' | gcloud secrets versions add SEEDREAM_API_KEY --data-file=- --project zvas-ai-image
+echo -n 'YOUR_GEMINI_API_KEY' | gcloud secrets versions add GEMINI_API_KEY --data-file=- --project <PROJECT_ID>
+echo -n 'YOUR_OPENAI_API_KEY' | gcloud secrets versions add OPENAI_API_KEY --data-file=- --project <PROJECT_ID>
+echo -n 'YOUR_SEEDANCE_API_KEY' | gcloud secrets versions add SEEDANCE_API_KEY --data-file=- --project <PROJECT_ID>
+echo -n 'YOUR_SEEDREAM_API_KEY' | gcloud secrets versions add SEEDREAM_API_KEY --data-file=- --project <PROJECT_ID>
 ```
 
 Chỉ tạo/gắn secret cho provider thực sự bật.
@@ -67,24 +67,24 @@ If secret does not exist yet, use `gcloud secrets create ...` first.
 
 Runtime service account (example in this project):
 
-- `217522553738-compute@developer.gserviceaccount.com`
+- `<PROJECT_NUMBER>-compute@developer.gserviceaccount.com`
 
 Grant accessor role:
 
 ```bash
 gcloud secrets add-iam-policy-binding GEMINI_API_KEY \
-  --project zvas-ai-image \
-  --member="serviceAccount:217522553738-compute@developer.gserviceaccount.com" \
+  --project <PROJECT_ID> \
+  --member="serviceAccount:<PROJECT_NUMBER>-compute@developer.gserviceaccount.com" \
   --role="roles/secretmanager.secretAccessor"
 
 gcloud secrets add-iam-policy-binding OPENAI_API_KEY \
-  --project zvas-ai-image \
-  --member="serviceAccount:217522553738-compute@developer.gserviceaccount.com" \
+  --project <PROJECT_ID> \
+  --member="serviceAccount:<PROJECT_NUMBER>-compute@developer.gserviceaccount.com" \
   --role="roles/secretmanager.secretAccessor"
 
 gcloud secrets add-iam-policy-binding SEEDANCE_API_KEY \
-  --project zvas-ai-image \
-  --member="serviceAccount:217522553738-compute@developer.gserviceaccount.com" \
+  --project <PROJECT_ID> \
+  --member="serviceAccount:<PROJECT_NUMBER>-compute@developer.gserviceaccount.com" \
   --role="roles/secretmanager.secretAccessor"
 ```
 
@@ -175,7 +175,7 @@ Check Cloud Run logs for `/api/generate`, auth errors, and provider errors:
 ```bash
 gcloud logging read \
   'resource.type="cloud_run_revision" AND resource.labels.service_name="ai-image-zvas"' \
-  --project zvas-ai-image \
+  --project <PROJECT_ID> \
   --limit 100 \
   --format="value(textPayload)"
 ```

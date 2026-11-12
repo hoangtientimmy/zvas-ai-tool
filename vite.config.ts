@@ -1,5 +1,6 @@
 import path from 'path';
 import { defineConfig } from 'vite';
+import type { HtmlTagDescriptor, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
@@ -10,6 +11,50 @@ import dotenv from 'dotenv';
 // SENTRY_ORG/SENTRY_PROJECT/SENTRY_AUTH_TOKEN ở dưới.
 dotenv.config({ path: path.resolve(__dirname, '.env.local') });
 dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+/**
+ * Thông tin riêng của từng nơi deploy — không hardcode trong index.html:
+ * - VITE_SITE_URL: domain public (vd. https://app.example.com) → canonical, og:url, og:image.
+ * - VITE_GA_MEASUREMENT_ID: GA4 (vd. G-XXXXXXXXXX) → nạp gtag.js. Thiếu thì không có GA.
+ */
+function siteMetaPlugin(): Plugin {
+  const escapeAttr = (v: string) => v.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  return {
+    name: 'site-meta',
+    transformIndexHtml() {
+      const tags: HtmlTagDescriptor[] = [];
+      const siteUrl = process.env.VITE_SITE_URL?.trim().replace(/\/+$/, '');
+      if (siteUrl) {
+        const url = `${siteUrl}/`;
+        const image = `${siteUrl}/og-image.jpeg`;
+        tags.push(
+          { tag: 'link', attrs: { rel: 'canonical', href: url }, injectTo: 'head' },
+          { tag: 'meta', attrs: { property: 'og:url', content: url }, injectTo: 'head' },
+          { tag: 'meta', attrs: { property: 'og:image', content: image }, injectTo: 'head' },
+          { tag: 'meta', attrs: { property: 'twitter:url', content: url }, injectTo: 'head' },
+          { tag: 'meta', attrs: { property: 'twitter:image', content: image }, injectTo: 'head' }
+        );
+      }
+      const gaId = process.env.VITE_GA_MEASUREMENT_ID?.trim();
+      if (gaId) {
+        if (!/^G-[A-Z0-9]+$/.test(gaId)) throw new Error(`VITE_GA_MEASUREMENT_ID không hợp lệ: ${escapeAttr(gaId)}`);
+        tags.push(
+          {
+            tag: 'script',
+            attrs: { async: true, src: `https://www.googletagmanager.com/gtag/js?id=${gaId}` },
+            injectTo: 'head',
+          },
+          {
+            tag: 'script',
+            children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`,
+            injectTo: 'head',
+          }
+        );
+      }
+      return tags;
+    },
+  };
+}
 
 export default defineConfig(() => {
     // Chỉ upload source maps khi có đủ config (CI/build release) — build local không cần.
@@ -29,6 +74,7 @@ export default defineConfig(() => {
       },
       plugins: [
         react(),
+        siteMetaPlugin(),
         tailwindcss(),
         // Phải là plugin cuối cùng để thấy được output final của các plugin khác.
         canUploadSourceMaps &&

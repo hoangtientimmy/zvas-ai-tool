@@ -78,7 +78,7 @@ export function useUserSessions({ uid, enabled, onRemoteRevoke }: UseUserSession
       console.error('listUserSessions failed', err);
       setError(
         isFirestorePermissionDenied(err)
-          ? 'Không đọc được phiên (Firestore rules). Chạy: firebase deploy --only firestore:rules,firestore:indexes --project zvas-ai-image'
+          ? 'Không đọc được phiên (Firestore rules). Chạy: firebase deploy --only firestore:rules,firestore:indexes'
           : 'Không tải được danh sách phiên. Thử lại sau.',
       );
     } finally {
@@ -134,7 +134,7 @@ export function useUserSessions({ uid, enabled, onRemoteRevoke }: UseUserSession
         console.error('registerOrTouchUserSession failed', err);
         if (isFirestorePermissionDenied(err)) {
           setError(
-            'Không ghi phiên đăng nhập (Firestore rules). Chạy: firebase deploy --only firestore:rules,firestore:indexes --project zvas-ai-image',
+            'Không ghi phiên đăng nhập (Firestore rules). Chạy: firebase deploy --only firestore:rules,firestore:indexes',
           );
         }
       }

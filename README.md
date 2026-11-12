@@ -2,6 +2,8 @@
 
 Ứng dụng web tạo và biến thể ảnh bằng AI (Gemini, OpenAI DALL·E 3, Seedance, Seedream), kết hợp Firebase Auth/Firestore, Express và Vite.
 
+**Mới nhận bàn giao repo / dựng môi trường mới:** làm theo [docs/18-handover-setup.md](./docs/18-handover-setup.md) — tạo Firebase project, admin đầu tiên, các biến cần điền. Deploy Vercel: [docs/17-vercel-deployment.md](./docs/17-vercel-deployment.md).
+
 **Người mới:** đọc [docs/00-onboarding.md](./docs/00-onboarding.md) trước — lộ trình từ cài đặt đến PR đầu tiên.
 
 **Tài liệu chi tiết:** xem [docs/README.md](./docs/README.md) (trang mục lục) hoặc đọc trực tiếp bộ tài liệu trong thư mục `docs/`. **Shell UI, logo làm mới vùng làm việc, banner Create, upload/kết quả:** [docs/02-frontend-architecture.md](./docs/02-frontend-architecture.md).

@@ -77,7 +77,7 @@ Hệ thống có **hai luồng** bổ sung cho nhau:
 | **Firestore `analytics_events`** | Dashboard nội bộ, chi phí/token, MAU theo tháng | `trackEvent()` |
 | **GA4 (gtag.js)** | Báo cáo marketing/funnel trên Google Analytics | `utils/gtagEvent.ts` |
 
-- **Measurement ID** (một property duy nhất): `G-W5YSHKJ7ZD` — cấu hình trong `index.html` (load `gtag/js` + `gtag('config', ...)`).
+- **Measurement ID** (một property duy nhất): biến build `VITE_GA_MEASUREMENT_ID` — `vite.config.ts` (plugin `site-meta`) chèn `gtag/js` + `gtag('config', ...)` vào `index.html`; thiếu biến thì không nạp GA.
 - **Khi nào gửi event GA4:** chỉ khi **`import.meta.env.PROD === true`** (bản build production). `npm run dev` **không** gọi `gtag('event', ...)` để tránh nhiễu số liệu trên cùng property.
 - **File triển khai:** `utils/gtagEvent.ts` (`sendGa4Event`, helper theo tên GA4 recommended); gọi song song với Firestore tại `App.tsx`, `hooks/useImageGeneration.ts`, `components/layout/AppHeader.tsx` (popup so sánh model).
 

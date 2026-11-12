@@ -65,7 +65,7 @@ File JSON đã có trong `.gitignore` (`service-account*.json`). Không commit.
 ```bash
 GEMINI_API_KEY=...
 SEEDREAM_API_KEY=...
-GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/zvas-ai-image/service-account.json
+GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/<PROJECT_ID>/service-account.json
 ```
 
 Restart `npm run dev` sau khi thêm/sửa credential.
@@ -118,7 +118,7 @@ Script: `scripts/provision-user-profile.ts` — merge `set` document `users/{uid
 Deploy rules sau khi sửa:
 
 ```bash
-firebase deploy --only firestore:rules --project zvas-ai-image
+firebase deploy --only firestore:rules --project <PROJECT_ID>
 ```
 
 ## Phiên đăng nhập đa thiết bị
@@ -190,7 +190,7 @@ flowchart LR
 ### Deploy rules / index
 
 ```bash
-firebase deploy --only firestore:rules,firestore:indexes --project zvas-ai-image
+firebase deploy --only firestore:rules,firestore:indexes --project <PROJECT_ID>
 ```
 
 Index: collection group `sessions`, field `lastActiveAt` DESC (query list phiên theo user).

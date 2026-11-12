@@ -41,7 +41,8 @@ jobs:
 
   deploy:
     needs: check
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    # Chỉ chạy khi đã cấu hình GCP (variable GCP_PROJECT) — repo chỉ deploy Vercel thì job tự bỏ qua.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.GCP_PROJECT != ''
     runs-on: ubuntu-latest
     environment: production
     # Không cho 2 lần deploy chạy chồng; lần mới chờ lần cũ xong.

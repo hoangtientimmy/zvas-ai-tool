@@ -6,7 +6,7 @@
 
 - Deploy bằng image **giữ nguyên** env/secrets/IAM đã gắn trên service (giống Mode A). Đổi secrets/env vẫn làm tay theo Mode B (§3), sau đó push code như bình thường.
 - `firebase-applet-config.json` không có trong Git → workflow ghi lại từ secret `FIREBASE_APPLET_CONFIG`.
-- Xác thực GCP bằng Workload Identity Federation (OIDC), **không** có service account key. Provider chỉ chấp nhận token từ repo `thanhnghiep1208/zVas-AI-Image`, ref `refs/heads/main`.
+- Xác thực GCP bằng Workload Identity Federation (OIDC), **không** có service account key. Provider chỉ chấp nhận token từ repo `hoangtientimmy/zvas-ai-tool`, ref `refs/heads/main`.
 - Chạy tay: tab Actions → **Deploy** → *Run workflow* (chọn branch `main`).
 - Firestore rules/indexes **không** deploy tự động — vẫn chạy tay theo §2 (trước khi merge nếu rules có field mới).
 - Rollback: chuyển traffic về revision cũ (§6), hoặc *Re-run* workflow của commit cũ trên tab Actions.
@@ -27,10 +27,10 @@
    | Loại     | Tên                      | Giá trị                                              |
    | -------- | ------------------------ | ---------------------------------------------------- |
    | Secret   | `WIF_PROVIDER`           | `projects/<number>/locations/global/workloadIdentityPools/github/providers/github-oidc` |
-   | Secret   | `WIF_SERVICE_ACCOUNT`    | `github-deployer@zvas-ai-image.iam.gserviceaccount.com` |
+   | Secret   | `WIF_SERVICE_ACCOUNT`    | `github-deployer@<PROJECT_ID>.iam.gserviceaccount.com` |
    | Secret   | `FIREBASE_APPLET_CONFIG` | Nội dung `firebase-applet-config.json`               |
    | Secret   | `VITE_SENTRY_DSN`        | (tuỳ chọn) DSN Sentry frontend                       |
-   | Variable | `GCP_PROJECT`            | `zvas-ai-image`                                      |
+   | Variable | `GCP_PROJECT`            | `<PROJECT_ID>`                                      |
    | Variable | `GCP_REGION`             | `us-west1`                                           |
    | Variable | `CLOUD_RUN_SERVICE`      | `ai-image-zvas`                                      |
    | Variable | `AR_REPO`                | `app`                                                |
@@ -57,7 +57,7 @@ Mỗi commit lên `main` = một lần deploy prod, nên `main` có các rule:
 Xem/kiểm tra rule đang áp:
 
 ```bash
-gh api repos/thanhnghiep1208/zVas-AI-Image/rules/branches/main --jq '.[].type'
+gh api repos/hoangtientimmy/zvas-ai-tool/rules/branches/main --jq '.[].type'
 ```
 
 Đổi nội dung `firebase-applet-config.json` → cập nhật lại secret `FIREBASE_APPLET_CONFIG`.
@@ -77,7 +77,7 @@ npm test
 
 Đảm bảo có:
 
-- **GA4:** Measurement ID `G-W5YSHKJ7ZD` trong `index.html`; custom event chỉ gửi từ bản production — chi tiết map event: `docs/04-workflow-analytics.md`.
+- **GA4:** Measurement ID qua biến build `VITE_GA_MEASUREMENT_ID` (xem `docs/18-handover-setup.md`); custom event chỉ gửi từ bản production — chi tiết map event: `docs/04-workflow-analytics.md`.
 - `firebase.json`
 - `.firebaserc`
 - `firestore.indexes.json`
@@ -97,9 +97,9 @@ Deploy từ **clone sạch** (không có file): tạo `firebase-applet-config.js
 
 ```bash
 firebase login
-firebase deploy --only firestore --project zvas-ai-image
+firebase deploy --only firestore --project <PROJECT_ID>
 # hoặc chỉ rules:
-firebase deploy --only firestore:rules --project zvas-ai-image
+firebase deploy --only firestore:rules --project <PROJECT_ID>
 ```
 
 (hoặc `npx firebase-tools@latest ...` nếu chưa cài global)
@@ -160,12 +160,12 @@ Dùng lần đầu tạo service hoặc môi trường clean:
 ### A. Chỉ 1 key (Gemini-only)
 
 ```bash
-gcloud secrets create GEMINI_API_KEY --replication-policy=automatic --project zvas-ai-image
-echo -n 'YOUR_GEMINI_API_KEY' | gcloud secrets versions add GEMINI_API_KEY --data-file=- --project zvas-ai-image
+gcloud secrets create GEMINI_API_KEY --replication-policy=automatic --project <PROJECT_ID>
+echo -n 'YOUR_GEMINI_API_KEY' | gcloud secrets versions add GEMINI_API_KEY --data-file=- --project <PROJECT_ID>
 
 gcloud secrets add-iam-policy-binding GEMINI_API_KEY \
-  --project zvas-ai-image \
-  --member="serviceAccount:217522553738-compute@developer.gserviceaccount.com" \
+  --project <PROJECT_ID> \
+  --member="serviceAccount:<PROJECT_NUMBER>-compute@developer.gserviceaccount.com" \
   --role="roles/secretmanager.secretAccessor"
 ```
 
@@ -234,7 +234,7 @@ Dùng khi Nano Banana 2.1 lỗi hoặc chất lượng kém. Không cần deploy
 ```bash
 gcloud logging read \
   'resource.type="cloud_run_revision" AND resource.labels.service_name="ai-image-zvas"' \
-  --project zvas-ai-image \
+  --project <PROJECT_ID> \
   --limit 100 \
   --format="value(textPayload)"
 
@@ -277,7 +277,7 @@ gcloud run services update-traffic ai-image-zvas --region us-west1 --to-revision
 ```bash
 gcloud logging read \
   'resource.type="cloud_run_revision" AND resource.labels.service_name="ai-image-zvas"' \
-  --project zvas-ai-image \
+  --project <PROJECT_ID> \
   --limit 50 \
   --format="value(textPayload)"
 ```
@@ -300,7 +300,7 @@ Redeploy Mode A sau khi sửa.
 **Triệu chứng:** job `deploy` build/push image xong nhưng bước `gcloud run deploy --image` lỗi:
 
 ```
-PERMISSION_DENIED: The source bucket ai-studio-bucket-217522553738-us-west1 must be in the same project as the service and has the used-by=cloudrun label...
+PERMISSION_DENIED: The source bucket ai-studio-bucket-<PROJECT_NUMBER>-us-west1 must be in the same project as the service and has the used-by=cloudrun label...
 ```
 
 **Nguyên nhân:** service ban đầu do Google AI Studio tạo (label `managed-by: google-ai-studio`) dưới dạng **multi-container**:
@@ -315,7 +315,7 @@ gcloud run services describe ai-image-zvas --region us-west1 --format=export > s
 # Xoá trong spec.template: container app-container, annotation run.googleapis.com/sources,
 # run.googleapis.com/base-images, run.googleapis.com/container-dependencies, runtimeClassName,
 # label client.knative.dev/nonce. Nâng nginx-container lên cpu '1' (concurrency > 1 cần ≥ 1 vCPU).
-gcloud run services replace service.yaml --region us-west1 --project zvas-ai-image
+gcloud run services replace service.yaml --region us-west1 --project <PROJECT_ID>
 ```
 
 **Phòng tránh:** **không** deploy lại từ AI Studio — có thể dựng lại sidecar và làm CI lỗi lại. Kiểm tra nhanh:

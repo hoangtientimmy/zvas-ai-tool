@@ -62,12 +62,12 @@ Doc 07, 09–16 là **nhật ký theo thời điểm** — có thể chứa chi 
 
 | Thứ cần | Dùng để | Ghi chú |
 | ------- | ------- | ------- |
-| Quyền vào Firebase project `zvas-ai-image` | Xem Firestore/Auth, deploy rules | Console: Firestore → chọn đúng **named database** |
+| Quyền vào Firebase project `<PROJECT_ID>` | Xem Firestore/Auth, deploy rules | Console: Firestore → chọn đúng **named database** |
 | Nội dung `firebase-applet-config.json` | Frontend + server biết project/database | Không có trong Git |
 | `service-account.json` (hoặc đường dẫn qua `GOOGLE_APPLICATION_CREDENTIALS`) | Server verify token, đọc Firestore, tạo user | Không commit; tên file đúng, không khoảng trắng đầu |
 | `GEMINI_API_KEY` (dev) | Gọi Gemini | Key của provider khác chỉ cần nếu test provider đó |
 | Tài khoản app (username + mật khẩu) | Đăng nhập | Hoặc tự tạo theo §3.3 |
-| Quyền GitHub repo `thanhnghiep1208/zVas-AI-Image` | Mở PR | `main` chỉ nhận merge qua PR |
+| Quyền GitHub repo `hoangtientimmy/zvas-ai-tool` | Mở PR | `main` chỉ nhận merge qua PR |
 
 ### 3.2 Các bước
 

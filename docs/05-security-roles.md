@@ -32,7 +32,7 @@
 Deploy:
 
 ```bash
-firebase deploy --only firestore:rules,firestore:indexes --project zvas-ai-image
+firebase deploy --only firestore:rules,firestore:indexes --project <PROJECT_ID>
 ```
 
 ## Phân quyền role
