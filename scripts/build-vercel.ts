@@ -91,6 +91,40 @@ fs.copyFileSync(bundlePath, path.join(funcDir, 'index.mjs'));
 fs.rmSync(tmpDir, { recursive: true, force: true });
 console.log(`[build-vercel] function: ${copied} file phụ thuộc`);
 
+// 3b) Gói chỉ có ESM nhưng bị gói CommonJS require() — vd. jwks-rsa (firebase-admin) → jose v6.
+// Runtime Vercel không hỗ trợ require(esm) → ERR_REQUIRE_ESM, function crash lúc khởi động.
+// Build thêm bản CJS và thêm điều kiện "require" vào exports của bản copy trong function.
+const ESM_ONLY_REQUIRED = ['jose'];
+for (const name of ESM_ONLY_REQUIRED) {
+  const pkgDir = path.join(funcDir, 'node_modules', name);
+  const pkgJsonPath = path.join(pkgDir, 'package.json');
+  if (!fs.existsSync(pkgJsonPath)) continue;
+  const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
+  const rootExport = pkg.exports?.['.'];
+  const esmEntry = typeof rootExport === 'string' ? rootExport : rootExport?.import ?? rootExport?.default;
+  if (pkg.type !== 'module' || !esmEntry || rootExport?.require) continue;
+  const cjsRel = './dist/__vercel_cjs__/index.cjs';
+  await build({
+    entryPoints: [path.join(root, 'node_modules', name, esmEntry)],
+    outfile: path.join(pkgDir, cjsRel),
+    bundle: true,
+    platform: 'node',
+    format: 'cjs',
+    target: 'node22',
+    logLevel: 'warning',
+  });
+  pkg.exports['.'] = {
+    ...(typeof rootExport === 'object' ? rootExport : {}),
+    require: cjsRel,
+    default: esmEntry,
+  };
+  // "require" phải đứng trước "default" để Node khớp đúng điều kiện.
+  const { types, require: req, ...rest } = pkg.exports['.'];
+  pkg.exports['.'] = { ...(types ? { types } : {}), require: req, ...rest };
+  fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2));
+  step(`Tạo bản CJS cho ${name} (tránh ERR_REQUIRE_ESM)`);
+}
+
 fs.writeFileSync(
   path.join(funcDir, '.vc-config.json'),
   JSON.stringify(
