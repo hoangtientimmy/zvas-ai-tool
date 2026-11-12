@@ -6,6 +6,7 @@ import type { AppOptions, ServiceAccount } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 import { parseAppletConfig } from './lib/parseAppletConfig';
+import { parseServiceAccount } from './lib/parseServiceAccount';
 
 const serverDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(serverDir, '..');
@@ -24,8 +25,15 @@ const firebaseConfig = parseAppletConfig(
 function serviceAccountFromEnv(): ServiceAccount | null {
   const raw = process.env.FIREBASE_SERVICE_ACCOUNT?.trim();
   if (!raw) return null;
-  const json = raw.startsWith('{') ? raw : Buffer.from(raw, 'base64').toString('utf8');
-  return JSON.parse(json) as ServiceAccount;
+  try {
+    return parseServiceAccount(raw);
+  } catch (err) {
+    throw new Error(
+      `FIREBASE_SERVICE_ACCOUNT không hợp lệ: ${(err as Error).message}. ` +
+        'Dán nguyên nội dung file JSON tải từ Firebase Console → Project settings → Service accounts ' +
+        '(hoặc bản base64 của file).'
+    );
+  }
 }
 
 /** Tìm service account JSON (dev local). Hỗ trợ tên file có khoảng trắng đầu do lỗi copy. */
