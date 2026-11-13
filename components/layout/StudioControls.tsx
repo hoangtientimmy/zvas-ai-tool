@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useState } from 'react';
-import { ChevronDown, CircleHelp, LayoutGrid, Layers2, Sparkles } from 'lucide-react';
+import { CircleHelp, LayoutGrid, Layers2, Sparkles } from 'lucide-react';
 import type { ProviderKey, ProviderModelOption } from '../../constants/aiModels';
 import { GeminiModelComparisonModal } from './GeminiModelComparisonModal';
 import { ga4SelectContent } from '../../utils/gtagEvent';
@@ -88,10 +88,6 @@ function StudioControlsComponent({
               </option>
             ))}
           </select>
-          <ChevronDown
-            className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]"
-            aria-hidden
-          />
         </div>
         {getProviderKey() === 'gemini' && (
           <button

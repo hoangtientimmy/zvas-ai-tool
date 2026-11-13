@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Avatar } from '../ui/Avatar';
-import { ChevronDown } from 'lucide-react';
 import {
   BarChart3,
   CheckCircle,
@@ -157,7 +156,6 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                           <option value="advice">Advice (chỉ Analytics)</option>
                           <option value="admin">Admin</option>
                         </select>
-                        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
                         </div>
                         {user.role === 'admin' && (
                           <span className="inline-flex" aria-label="Admin">
@@ -293,7 +291,6 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                   <option value="advice">Advice (chỉ Analytics)</option>
                   <option value="admin">Admin</option>
                 </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
                 </div>
               </div>
               <div className="flex items-center justify-end gap-3 pt-2">

@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
 import { PaletteIcon } from '../icons/PaletteIcon';
 import { getStyleDisplayName } from '../../lib/styleGuide';
 
@@ -77,7 +76,6 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                 <option value="white">Nền Trắng</option>
                 <option value="transparent">Trong suốt</option>
                 </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
             </div>
         </div>
 
@@ -95,7 +93,6 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                         <option value="white">Viền Trắng</option>
                         <option value="black">Viền Đen</option>
                     </select>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
                 </div>
                 <div className="relative w-full">
                     <select
@@ -108,7 +105,6 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                         <option value="normal">Vừa</option>
                         <option value="thick">Dày</option>
                     </select>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
                 </div>
             </div>
         </div>
