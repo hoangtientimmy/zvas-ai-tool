@@ -37,22 +37,17 @@ export const AdminDashboardHeader: React.FC<AdminDashboardHeaderProps> = ({
         </button>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06]">
+            <span className="flex items-center justify-center text-white">
               {analyticsOnly ? (
-                <BarChart3 className="h-4 w-4 text-cyan-300" aria-hidden />
+                <BarChart3 className="h-5 w-5" aria-hidden />
               ) : (
-                <LayoutDashboard className="h-4 w-4 text-cyan-300" aria-hidden />
+                <LayoutDashboard className="h-5 w-5" aria-hidden />
               )}
             </span>
-            <h1 className="truncate text-lg font-semibold tracking-tight text-white sm:text-xl">
+            <h1 className="font-display truncate text-lg font-bold tracking-tight text-white sm:text-xl">
               {analyticsOnly ? 'Analytics' : 'Bảng điều khiển'}
             </h1>
           </div>
-          <p className="mt-1 max-w-xl text-sm text-gray-500">
-            {analyticsOnly
-              ? 'Theo dõi xu hướng và hiệu suất — giao diện chỉ đọc, dễ đọc.'
-              : 'Chào bạn — quản lý team, cấu hình và số liệu trong một không gian gọn gàng.'}
-          </p>
         </div>
       </div>
 

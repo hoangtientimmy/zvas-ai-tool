@@ -91,7 +91,7 @@ const ImageCard: React.FC<ImageCardProps> = React.memo(({
                 <button
                   type="button"
                   onClick={onForceRemoveBackgroundDownload}
-                  className="rounded-full border border-white/10 bg-black/55 px-2.5 py-1.5 text-[11px] font-semibold text-white backdrop-blur-sm transition-colors hover:border-emerald-400/50 hover:bg-emerald-600/85"
+                  className="rounded-full border border-white/10 bg-black/55 px-2.5 py-1.5 text-xs font-semibold text-white backdrop-blur-sm transition-colors hover:border-emerald-400/50 hover:bg-emerald-600/85"
                   title="Tách nền và tải PNG"
                 >
                   Tách nền

@@ -68,7 +68,7 @@ function AppHeaderComponent({
             <h1 className="font-display truncate text-base font-bold tracking-tight text-[var(--lp-text)] sm:text-lg">
               AI Image ZVAS
             </h1>
-            <p className="hidden text-[11px] text-[var(--lp-muted)] sm:block">Studio tạo ảnh AI</p>
+            <p className="hidden text-xs text-[var(--lp-muted)] sm:block">Studio tạo ảnh AI</p>
           </div>
         </button>
 
@@ -107,7 +107,7 @@ function AppHeaderComponent({
             >
               <ShieldCheck className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
               {pendingUsersCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full border-2 border-[var(--lp-void)] bg-red-500 px-1 text-[9px] font-bold text-white sm:h-5 sm:min-w-[20px] sm:text-[10px]">
+                <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full border-2 border-[var(--lp-void)] bg-red-500 px-1 text-xs font-bold text-white sm:h-5 sm:min-w-[20px] sm:text-xs">
                   {pendingUsersCount > 99 ? '99+' : pendingUsersCount}
                 </span>
               )}
@@ -128,7 +128,7 @@ function AppHeaderComponent({
         )}
 
         <div className="flex items-center gap-2 rounded-lg border border-[var(--lp-border)] bg-[var(--lp-surface-elevated)] py-1 pl-1 pr-2 sm:pr-3">
-          <Avatar name={user.displayName || user.email || '?'} photoURL={user.photoURL} className="h-7 w-7 text-[11px] sm:h-8 sm:w-8" />
+          <Avatar name={user.displayName || user.email || '?'} photoURL={user.photoURL} className="h-7 w-7 text-xs sm:h-8 sm:w-8" />
           <span className="hidden max-w-[100px] truncate text-xs font-medium text-[var(--lp-text)] md:inline">
             {user.displayName}
           </span>

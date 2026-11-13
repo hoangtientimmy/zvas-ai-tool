@@ -78,7 +78,7 @@ export const FailureDimensionsPanel = ({ failureStats }: { failureStats: Monthly
               <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/[0.06]">
                 <div className={`h-full rounded-full ${style.bar}`} style={{ width: `${pct}%` }} />
               </div>
-              <p className="mt-2 text-[11px] leading-snug text-gray-500">{style.hint}</p>
+              <p className="mt-2 text-xs leading-snug text-gray-500">{style.hint}</p>
             </div>
           );
         })}

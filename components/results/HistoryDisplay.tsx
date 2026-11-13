@@ -16,7 +16,7 @@ function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, 
     return (
         <div className="h-full px-4 pb-4">
           <div className="flex h-full items-center justify-center rounded-xl border border-dashed border-white/10">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.04em] text-[var(--lp-faint)]">Lịch sử trống</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.04em] text-[var(--lp-faint)]">Lịch sử trống</span>
           </div>
         </div>
     );
@@ -25,11 +25,11 @@ function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, 
   return (
     <div className="h-full flex flex-col">
       <div className="mb-2.5 flex items-center justify-between px-4">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.04em] text-[var(--lp-muted)]">Gần đây (10 hình mới nhất)</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.04em] text-[var(--lp-muted)]">Gần đây (10 hình mới nhất)</span>
         {onClear ? (
             <button 
                 onClick={onClear}
-                className="px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.04em] text-[var(--lp-muted)] transition-colors hover:bg-white/[0.05] hover:text-red-300"
+                className="px-2 py-1 text-xs font-semibold uppercase tracking-[0.04em] text-[var(--lp-muted)] transition-colors hover:bg-white/[0.05] hover:text-red-300"
             >
                 Xóa lịch sử
             </button>
@@ -67,7 +67,7 @@ function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, 
             </div>
             
             {/* Index Badge */}
-            <div className="absolute left-1 top-1 rounded bg-black/60 px-1 text-[9px] font-semibold text-gray-300">
+            <div className="absolute left-1 top-1 rounded bg-black/60 px-1 text-xs font-semibold text-gray-300">
                 #{index + 1}
             </div>
           </div>

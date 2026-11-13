@@ -57,12 +57,12 @@ export const UserHistoryModal: React.FC<UserHistoryModalProps> = ({
                 key={img.id}
                 className="group relative aspect-square overflow-hidden rounded-xl border border-white/[0.08] bg-[var(--lp-ink)]"
               >
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-gray-600 p-2 text-center italic">
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-600 p-2 text-center italic">
                   {img.imageUrl === 'idb' ? 'Ảnh lưu tại máy người dùng' : 'Lỗi ảnh'}
                 </div>
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex flex-col justify-end">
-                  <p className="text-[10px] text-white line-clamp-3">{img.prompt}</p>
-                  <p className="text-[8px] text-gray-400 mt-1">
+                  <p className="text-xs text-white line-clamp-3">{img.prompt}</p>
+                  <p className="text-xs text-gray-400 mt-1">
                     {img.createdAt?.toDate ? img.createdAt.toDate().toLocaleString() : 'N/A'}
                   </p>
                 </div>

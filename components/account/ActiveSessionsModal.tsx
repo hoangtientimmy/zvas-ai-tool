@@ -132,16 +132,16 @@ export const ActiveSessionsModal: React.FC<ActiveSessionsModalProps> = ({
                       {session.deviceLabel}
                     </span>
                     {session.isCurrent ? (
-                      <span className="rounded-md bg-[var(--lp-accent-dim)] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--lp-accent)]">
+                      <span className="rounded-md bg-[var(--lp-accent-dim)] px-1.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[var(--lp-accent)]">
                         Phiên này
                       </span>
                     ) : null}
                     {session.isRevoked ? (
-                      <span className="rounded-md bg-red-500/15 px-1.5 py-0.5 text-[10px] font-medium text-red-300">
+                      <span className="rounded-md bg-red-500/15 px-1.5 py-0.5 text-xs font-medium text-red-300">
                         Đã đăng xuất
                       </span>
                     ) : session.isStale ? (
-                      <span className="rounded-md bg-[var(--lp-border)] px-1.5 py-0.5 text-[10px] text-[var(--lp-muted)]">
+                      <span className="rounded-md bg-[var(--lp-border)] px-1.5 py-0.5 text-xs text-[var(--lp-muted)]">
                         Không hoạt động lâu
                       </span>
                     ) : null}
@@ -149,7 +149,7 @@ export const ActiveSessionsModal: React.FC<ActiveSessionsModalProps> = ({
                   <p className="mt-0.5 text-xs text-[var(--lp-muted)]">
                     Hoạt động: {session.lastActiveLabel}
                   </p>
-                  <p className="mt-0.5 truncate font-mono text-[10px] text-[var(--lp-muted)]/80">
+                  <p className="mt-0.5 truncate font-mono text-xs text-[var(--lp-muted)]/80">
                     {session.sessionId.slice(0, 8)}…
                   </p>
                 </div>
@@ -169,7 +169,7 @@ export const ActiveSessionsModal: React.FC<ActiveSessionsModalProps> = ({
           )}
         </ul>
 
-        <p className="border-t border-[var(--lp-border)] px-5 py-3 text-[11px] leading-relaxed text-[var(--lp-muted)]">
+        <p className="border-t border-[var(--lp-border)] px-5 py-3 text-xs leading-relaxed text-[var(--lp-muted)]">
           Phiên khác sẽ bị chặn khi mở lại app (tối đa vài phút). Đăng xuất toàn bộ tài khoản Firebase trên thiết bị
           khác vẫn có thể cần đổi mật khẩu nếu nghi ngờ lộ mật khẩu.
         </p>

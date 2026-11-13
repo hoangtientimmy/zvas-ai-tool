@@ -150,7 +150,7 @@ function StyleGuideViewerInner({ onClose, onStyleSelect, selectedStyle = '' }: S
                     </span>
                     <span className="flex min-w-0 flex-col px-2.5 py-2">
                       <span className="truncate text-sm font-medium text-[var(--lp-text)]">{item.name}</span>
-                      <span className="truncate text-[11px] text-[var(--lp-muted)]">{item.category}</span>
+                      <span className="truncate text-xs text-[var(--lp-muted)]">{item.category}</span>
                     </span>
                     {isSelected && (
                       <span className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--lp-accent)] text-[var(--lp-ink)] shadow-lg">

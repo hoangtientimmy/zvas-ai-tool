@@ -112,7 +112,7 @@ function MultipleImageComponent({
             {prompts.slice(0, numImages).map((prompt, index) => (
               <div key={index} className="space-y-1.5">
                 <label className="flex items-center text-xs font-medium text-gray-500">
-                  <span className="mr-2 flex h-5 w-5 items-center justify-center rounded-full border border-cyan-500/30 bg-cyan-500/10 text-[10px] font-semibold text-cyan-300">
+                  <span className="mr-2 flex h-5 w-5 items-center justify-center rounded-full border border-cyan-500/30 bg-cyan-500/10 text-xs font-semibold text-cyan-300">
                     {index + 1}
                   </span>
                   Prompt cho hình {index + 1}

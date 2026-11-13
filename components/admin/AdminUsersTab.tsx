@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar } from '../ui/Avatar';
+import { ChevronDown } from 'lucide-react';
 import {
   BarChart3,
   CheckCircle,
@@ -143,18 +144,21 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-5 py-4">
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center gap-2">
+                        <div className="relative">
                         <select
                           value={user.role}
                           onChange={(e) =>
                             onUpdateRole(user.uid, e.target.value as 'admin' | 'editor' | 'advice')
                           }
-                          className="rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1.5 text-xs text-white outline-none transition focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20"
+                          className="h-9 min-w-[11rem] cursor-pointer appearance-none rounded-lg border border-white/10 bg-[var(--lp-ink)] pl-3 pr-9 text-sm text-white outline-none transition hover:border-white/25 focus:border-white/40"
                         >
                           <option value="editor">Editor</option>
                           <option value="advice">Advice (chỉ Analytics)</option>
                           <option value="admin">Admin</option>
                         </select>
+                        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
+                        </div>
                         {user.role === 'admin' && (
                           <span className="inline-flex" aria-label="Admin">
                             <Shield className="w-3 h-3 text-cyan-400" />
@@ -169,7 +173,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                     </td>
                     <td className="whitespace-nowrap px-5 py-4">
                       <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium ${
+                        className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${
                           user.status === 'approved'
                             ? 'bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-500/25'
                             : user.status === 'rejected'
@@ -279,15 +283,18 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
               </div>
               <div>
                 <label className="block text-xs font-medium uppercase tracking-wider text-gray-500 mb-1">Vai trò</label>
+                <div className="relative">
                 <select
                   value={newRole}
                   onChange={(e) => setNewRole(e.target.value as 'admin' | 'editor' | 'advice')}
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.06] px-3.5 py-2.5 text-sm text-white outline-none transition focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20"
+                  className="w-full cursor-pointer appearance-none rounded-xl border border-white/10 bg-white/[0.06] py-2.5 pl-3.5 pr-10 text-sm text-white outline-none transition focus:border-white/40"
                 >
                   <option value="editor">Editor</option>
                   <option value="advice">Advice (chỉ Analytics)</option>
                   <option value="admin">Admin</option>
                 </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
+                </div>
               </div>
               <div className="flex items-center justify-end gap-3 pt-2">
                 <button

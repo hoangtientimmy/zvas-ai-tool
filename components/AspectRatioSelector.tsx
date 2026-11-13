@@ -27,7 +27,7 @@ export const AspectRatioSelector: React.FC<AspectRatioSelectorProps> = ({ aspect
             `}
           >
             <AspectRatioIcon ratio={ratio} className="w-4 h-4 mb-0.5" />
-            <span className="text-[10px] font-medium">{ratio}</span>
+            <span className="text-xs font-medium">{ratio}</span>
           </button>
         ))}
       </div>

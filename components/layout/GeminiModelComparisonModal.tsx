@@ -13,7 +13,7 @@ function renderInline(text: string): React.ReactNode {
       return (
         <code
           key={i}
-          className="rounded bg-[var(--lp-accent-dim)] px-1 py-0.5 font-mono text-[0.85em] text-[var(--lp-accent)]"
+          className="rounded bg-[var(--lp-accent-dim)] px-1 py-0.5 font-mono text-[length:max(12px,0.85em)] text-[var(--lp-accent)]"
         >
           {part.slice(1, -1)}
         </code>
@@ -230,7 +230,7 @@ export function GeminiModelComparisonModal({ open, onClose }: GeminiModelCompari
           </button>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5 sm:py-5">{body}</div>
-        <p className="shrink-0 border-t border-[var(--lp-border)] px-4 py-2.5 text-center text-[10px] text-[var(--lp-muted)] sm:px-5">
+        <p className="shrink-0 border-t border-[var(--lp-border)] px-4 py-2.5 text-center text-xs text-[var(--lp-muted)] sm:px-5">
           Nguồn: <code className="rounded bg-[var(--lp-accent-dim)] px-1 font-mono">docs/so-sanh-model-gemini.md</code>
         </p>
       </div>

@@ -52,13 +52,13 @@ const ErrorSampleTooltip = ({ messages, title }: { messages: string[]; title: st
               transform: pos.flip ? undefined : 'translateY(-100%)',
             }}
           >
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-gray-500">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
               {title}
             </p>
             {messages.map((msg, i) => (
               <p
                 key={i}
-                className={`break-words text-[11px] leading-snug text-gray-300${i > 0 ? ' mt-1.5 border-t border-white/[0.06] pt-1.5' : ''}`}
+                className={`break-words text-xs leading-snug text-gray-300${i > 0 ? ' mt-1.5 border-t border-white/[0.06] pt-1.5' : ''}`}
               >
                 {msg}
               </p>
@@ -86,7 +86,7 @@ export const KpiCard = ({
       {icon}
     </div>
     <div className="min-w-0">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-gray-500">{title}</p>
+      <p className="text-xs font-medium uppercase tracking-wide text-gray-500">{title}</p>
       <p className="mt-1 truncate text-2xl font-semibold tabular-nums text-white">{value}</p>
       {subValue && <p className="mt-1 text-xs text-gray-500">{subValue}</p>}
     </div>
@@ -108,7 +108,7 @@ export const LatencyCard = ({
     <div className="flex flex-col rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 backdrop-blur-sm">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-wide text-gray-500">Độ trễ TB</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-gray-500">Độ trễ TB</p>
           <p className="mt-1 text-2xl font-semibold tabular-nums text-white">{stats.avg.toFixed(1)}s</p>
           <p className="mt-1 text-xs text-gray-500">p95: {stats.p95.toFixed(1)}s</p>
         </div>
@@ -157,7 +157,7 @@ export const MonthlyBudgetCard = ({
             <DollarSign className="h-5 w-5 text-emerald-400" />
           </div>
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-wide text-gray-500">
+            <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
               Ngân sách tháng
             </p>
             <p className="mt-1 text-lg font-semibold tabular-nums text-white">
@@ -256,7 +256,7 @@ const TokenUsageCard = ({
 
   return (
     <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 backdrop-blur-sm">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-gray-500">{title}</p>
+      <p className="text-xs font-medium uppercase tracking-wide text-gray-500">{title}</p>
       <p className="mt-1 text-2xl font-semibold tabular-nums text-white">{value}</p>
       <p className={`mt-2 text-xs ${trendColorClass}`}>{trendLabel} so với tháng trước</p>
     </div>
@@ -526,7 +526,7 @@ export const FailedGenerationsBox = ({
             >
               {new Intl.NumberFormat('en-US').format(totalFailed)}
             </p>
-            <p className="text-[10px] text-gray-600">lượt thất bại</p>
+            <p className="text-xs text-gray-600">lượt thất bại</p>
           </div>
           {!logCleared && hasErrors && (
             <button
@@ -599,7 +599,7 @@ export const FailedGenerationsBox = ({
                     <td className="px-3 py-2.5">
                       <div className="group relative flex flex-wrap items-center gap-2">
                         <span
-                          className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ${
+                          className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ${
                             item.severity === 'critical'
                               ? 'bg-red-500/15 text-red-300 ring-red-500/25'
                               : 'bg-amber-500/15 text-amber-300 ring-amber-500/25'
@@ -613,7 +613,7 @@ export const FailedGenerationsBox = ({
                           <ErrorSampleTooltip messages={item.sampleMessages} title="Sample error messages" />
                         )}
                         {item.source && (
-                          <span className="text-[11px] text-gray-500">· {GENERATION_ERROR_SOURCE_LABELS[item.source]}</span>
+                          <span className="text-xs text-gray-500">· {GENERATION_ERROR_SOURCE_LABELS[item.source]}</span>
                         )}
                       </div>
                     </td>

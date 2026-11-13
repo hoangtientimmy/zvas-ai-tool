@@ -115,7 +115,7 @@ export const ReferenceImageUploader: React.FC<ReferenceImageUploaderProps> = ({
             <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-cyan-300/80 transition-colors group-hover/add:border-cyan-500/30 group-hover/add:text-cyan-200">
               <UploadIcon className="h-4 w-4" />
             </span>
-            <span className="text-[10px] font-semibold tracking-tight">Thêm ảnh</span>
+            <span className="text-xs font-semibold tracking-tight">Thêm ảnh</span>
           </button>
           {images.map((image, index) => (
             <div key={`${image.previewUrl}-${index}`} className="group relative aspect-square">

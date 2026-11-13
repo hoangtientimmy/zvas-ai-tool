@@ -8,7 +8,7 @@ export interface AppFooterProps {
 export const AppFooter = memo(function AppFooter({ activeModelLabel, providerLabel }: AppFooterProps) {
   return (
     <footer className="hidden sm:flex flex-shrink-0 items-center justify-center gap-3 border-t border-[var(--lp-border)] bg-[var(--lp-surface)] px-4 py-2 backdrop-blur-md">
-      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] text-[var(--lp-muted)] sm:text-xs">
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-[var(--lp-muted)] sm:text-xs">
         <div className="flex items-center gap-2">
           <span
             className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--lp-accent)] shadow-[0_0_10px_var(--lp-accent-glow)]"

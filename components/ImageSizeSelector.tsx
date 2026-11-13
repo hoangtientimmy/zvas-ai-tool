@@ -26,7 +26,7 @@ export const ImageSizeSelector: React.FC<ImageSizeSelectorProps> = ({ imageSize,
             `}
           >
             <Maximize className="w-3.5 h-3.5 mb-0.5" />
-            <span className="text-[10px] font-medium">{size}</span>
+            <span className="text-xs font-medium">{size}</span>
           </button>
         ))}
       </div>

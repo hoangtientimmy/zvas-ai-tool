@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { ChevronDown } from 'lucide-react';
 import { PaletteIcon } from '../icons/PaletteIcon';
 import { getStyleDisplayName } from '../../lib/styleGuide';
 
@@ -69,42 +70,45 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                 id="backgroundStyle"
                 value={backgroundStyle}
                 onChange={(e) => onBackgroundChange(e.target.value)}
-                className="w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate"
+                className="w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl py-2 pl-3 pr-9 text-base text-gray-300 focus:border-white/40 outline-none appearance-none truncate cursor-pointer"
                 >
                 <option value="none">Mặc định</option>
                 <option value="black">Nền Đen</option>
                 <option value="white">Nền Trắng</option>
                 <option value="transparent">Trong suốt</option>
                 </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
             </div>
         </div>
 
         {/* Outline Section */}
-        <div className="space-y-1.5">
+        <div className="flex flex-col gap-2 pt-2">
             <label className="mg-eyebrow">Viền Chủ Thể (Outline)</label>
             <div className="grid grid-cols-2 gap-2">
                 <div className="relative w-full">
                     <select
                         value={outlineType}
                         onChange={(e) => onOutlineTypeChange(e.target.value as any)}
-                        className="w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate"
+                        className="w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl py-2 pl-3 pr-9 text-base text-gray-300 focus:border-white/40 outline-none appearance-none truncate cursor-pointer"
                     >
                         <option value="none">Không viền</option>
                         <option value="white">Viền Trắng</option>
                         <option value="black">Viền Đen</option>
                     </select>
+                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
                 </div>
                 <div className="relative w-full">
                     <select
                         value={outlineThickness}
                         disabled={outlineType === 'none'}
                         onChange={(e) => onOutlineThicknessChange(e.target.value as any)}
-                        className={`w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate ${outlineType === 'none' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl py-2 pl-3 pr-9 text-base text-gray-300 focus:border-white/40 outline-none appearance-none truncate cursor-pointer ${outlineType === 'none' ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         <option value="thin">Mỏng</option>
                         <option value="normal">Vừa</option>
                         <option value="thick">Dày</option>
                     </select>
+                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]" aria-hidden />
                 </div>
             </div>
         </div>
@@ -132,7 +136,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                     <span className="text-sm text-cyan-200 font-medium">Force remove background</span>
                 </label>
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] uppercase tracking-wide text-cyan-300/80">Strength</span>
+                  <span className="text-xs uppercase tracking-wide text-cyan-300/80">Strength</span>
                   <select
                     value={options.backgroundRemovalStrength}
                     onChange={(e) => onBackgroundRemovalStrengthChange(e.target.value as 'soft' | 'strong')}
@@ -147,7 +151,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                 </div>
               </div>
             ) : (
-              <div className="p-2 rounded-xl border border-[var(--lp-border)] text-[11px] text-gray-500 flex items-center">
+              <div className="p-2 rounded-xl border border-[var(--lp-border)] text-xs text-gray-500 flex items-center">
                 Bật nền trong suốt để dùng Force remove background.
               </div>
             )}
@@ -164,7 +168,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                     disabled={!hasStartImage}
                     className="w-4 h-4 rounded border-gray-600 text-cyan-500 focus:ring-0 focus:ring-offset-0 bg-gray-800 flex-shrink-0"
                 />
-                <span className="text-[11px] text-gray-300 font-bold uppercase leading-tight">Giữ style ảnh gốc</span>
+                <span className="text-xs text-gray-300 font-bold uppercase leading-tight">Giữ style ảnh gốc</span>
             </label>
 
             <label className={`flex items-center space-x-2 p-2.5 rounded-xl border border-[var(--lp-border)] transition-colors ${hasReferenceImages ? 'hover:bg-gray-700/50 cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}>
@@ -175,7 +179,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                     disabled={!hasReferenceImages}
                     className="w-4 h-4 rounded border-gray-600 text-cyan-500 focus:ring-0 focus:ring-offset-0 bg-gray-800 flex-shrink-0"
                 />
-                <span className="text-[11px] text-gray-300 font-bold uppercase leading-tight">Giữ style tham chiếu</span>
+                <span className="text-xs text-gray-300 font-bold uppercase leading-tight">Giữ style tham chiếu</span>
             </label>
           </div>
         </div>
