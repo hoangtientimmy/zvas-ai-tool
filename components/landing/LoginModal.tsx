@@ -1,7 +1,31 @@
-import React, { useState, useCallback } from 'react';
-import { LogIn, X, Sparkles } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { X } from 'lucide-react';
 import { resolveLoginEmail } from '../../utils/authCredentials';
 import { useLoginContactText } from '../../hooks/usePublicSettings';
+
+type GalleryTile = { seed: string; w: number; h: number; ratio: string };
+
+/** Ảnh mẫu cho cột trái (placeholder picsum — thay bằng ảnh thật do studio tạo). */
+const LOGIN_GALLERY: GalleryTile[][] = [
+  [
+    { seed: 'zvas-login-a1', w: 480, h: 640, ratio: 'aspect-[3/4]' },
+    { seed: 'zvas-login-a2', w: 480, h: 640, ratio: 'aspect-[3/4]' },
+    { seed: 'zvas-login-a3', w: 480, h: 480, ratio: 'aspect-square' },
+    { seed: 'zvas-login-a4', w: 480, h: 640, ratio: 'aspect-[3/4]' },
+  ],
+  [
+    { seed: 'zvas-login-b1', w: 480, h: 480, ratio: 'aspect-square' },
+    { seed: 'zvas-login-b2', w: 480, h: 640, ratio: 'aspect-[3/4]' },
+    { seed: 'zvas-login-b3', w: 480, h: 640, ratio: 'aspect-[3/4]' },
+    { seed: 'zvas-login-b4', w: 480, h: 400, ratio: 'aspect-[6/5]' },
+  ],
+  [
+    { seed: 'zvas-login-c1', w: 480, h: 400, ratio: 'aspect-[6/5]' },
+    { seed: 'zvas-login-c2', w: 480, h: 640, ratio: 'aspect-[3/4]' },
+    { seed: 'zvas-login-c3', w: 480, h: 640, ratio: 'aspect-[3/4]' },
+    { seed: 'zvas-login-c4', w: 480, h: 480, ratio: 'aspect-square' },
+  ],
+];
 
 export interface LoginModalProps {
   open: boolean;
@@ -30,84 +54,131 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     [username, password, onLogin],
   );
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="relative mx-4 w-full max-w-sm animate-in fade-in zoom-in-95">
-        <div className="rounded-[20px] border border-white/10 bg-[var(--lp-surface)] p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]">
-          <button
-            type="button"
-            onClick={onClose}
-            className="absolute right-4 top-4 rounded-lg p-1 text-gray-500 transition hover:text-white"
-          >
-            <X className="h-4 w-4" />
-          </button>
+  const canSubmit = username.trim().length > 0 && password.length > 0 && !isLoggingIn;
 
-          <div className="flex items-center gap-3 mb-6">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-[var(--lp-void)]">
-              <Sparkles className="h-[18px] w-[18px]" />
-            </span>
-            <div>
-              <h2 className="font-display text-lg font-bold text-white">AI Image ZVAS</h2>
-              <p className="text-xs text-gray-500">Đăng nhập để tiếp tục</p>
-            </div>
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-6"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="login-title"
+        className="relative grid max-h-[calc(100dvh-1.5rem)] w-full max-w-[62rem] md:h-[min(44rem,calc(100dvh-3rem))] overflow-hidden rounded-[28px] border border-white/10 bg-[#121212] shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)] md:grid-cols-[1fr_1fr]"
+      >
+        {/* Lưới ảnh mẫu — 3 cột chạy chậm ngược chiều nhau */}
+        <div className="relative hidden overflow-hidden py-0 pl-3 md:block" aria-hidden>
+          <div className="grid h-full grid-cols-3 gap-2.5">
+            {LOGIN_GALLERY.map((col, ci) => (
+              <div key={ci} className="relative overflow-hidden">
+                <div className={`flex flex-col gap-2.5 ${ci === 1 ? 'mg-gallery-down' : 'mg-gallery-up'}`}>
+                  {[...col, ...col].map((tile, ti) => (
+                    <div key={ti} className={`overflow-hidden rounded-2xl ${tile.ratio}`}>
+                      <img
+                        src={`https://picsum.photos/seed/${tile.seed}/${tile.w}/${tile.h}`}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-[#121212] to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#121212] to-transparent" />
+        </div>
+
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Đóng"
+          className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 text-white/90 transition hover:border-white/30 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-5 sm:top-5"
+        >
+          <X className="h-5 w-5" strokeWidth={2.25} />
+        </button>
+
+        <div className="flex min-h-0 flex-col justify-center overflow-y-auto px-6 py-14 sm:px-10 lg:px-12">
+          <h2
+            id="login-title"
+            className="font-display text-[2.25rem] font-bold leading-[1.02] tracking-[-0.03em] text-white lg:text-[2.75rem]"
+          >
+            Sẵn sàng sáng tạo?
+          </h2>
+          <p className="mt-4 max-w-[26rem] text-base leading-[1.6] text-[var(--lp-muted)] sm:text-[17px]">
+            Gemini, OpenAI và Seedance trong một studio. Workflow cho team marketing và design, có phân quyền và analytics.
+          </p>
 
           {loginError && (
             <div
               role="alert"
-              className="mb-4 rounded-xl border border-red-500/35 bg-red-500/[0.08] px-3.5 py-2.5 text-sm text-red-50/95"
+              className="mt-6 rounded-xl border border-red-500/35 bg-red-500/[0.08] px-3.5 py-2.5 text-sm text-red-50/95"
             >
               {loginError}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="mg-eyebrow mb-2 block">
-                Tên đăng nhập
-              </label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Nhập tên đăng nhập"
-                required
-                disabled={isLoggingIn}
-                autoFocus
-                className="w-full rounded-xl border border-white/10 bg-[var(--lp-ink)] px-3.5 py-2.5 text-sm text-white placeholder-gray-500 outline-none transition focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 disabled:opacity-50"
-              />
-            </div>
-            <div>
-              <label className="mg-eyebrow mb-2 block">
-                Mật khẩu
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Nhập mật khẩu"
-                required
-                disabled={isLoggingIn}
-                className="w-full rounded-xl border border-white/10 bg-[var(--lp-ink)] px-3.5 py-2.5 text-sm text-white placeholder-gray-500 outline-none transition focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 disabled:opacity-50"
-              />
-            </div>
+          <form onSubmit={handleSubmit} className="mt-8 space-y-3">
+            <label htmlFor="login-username" className="sr-only">
+              Tên đăng nhập
+            </label>
+            <input
+              id="login-username"
+              type="text"
+              autoComplete="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Tên đăng nhập"
+              required
+              disabled={isLoggingIn}
+              autoFocus
+              className="h-12 w-full rounded-xl border border-white/15 bg-transparent px-4 text-base text-white placeholder:text-[#8a8a8a] outline-none transition focus:border-white/40 disabled:opacity-50"
+            />
+            <label htmlFor="login-password" className="sr-only">
+              Mật khẩu
+            </label>
+            <input
+              id="login-password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Mật khẩu"
+              required
+              disabled={isLoggingIn}
+              className="h-12 w-full rounded-xl border border-white/15 bg-transparent px-4 text-base text-white placeholder:text-[#8a8a8a] outline-none transition focus:border-white/40 disabled:opacity-50"
+            />
             <button
               type="submit"
-              disabled={isLoggingIn}
-              className="mg-btn-primary inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-4 text-sm font-semibold disabled:opacity-50"
+              disabled={!canSubmit}
+              className={`mt-2 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-4 text-base font-semibold transition ${
+                canSubmit ? 'mg-btn-primary' : 'cursor-not-allowed bg-white/[0.06] text-[#8a8a8a]'
+              }`}
             >
-              <LogIn className="h-4 w-4" aria-hidden />
               {isLoggingIn ? 'Đang đăng nhập…' : 'Đăng nhập'}
             </button>
           </form>
-          {contactText && (
-            <p className="mt-4 whitespace-pre-line text-center text-xs text-gray-400">
-              Để được cấp tài khoản vui lòng liên hệ:{'\n'}
-              {contactText}
-            </p>
-          )}
+
+          <p className="mt-8 whitespace-pre-line text-[15px] text-[var(--lp-muted)]">
+            Chưa có tài khoản? <span className="font-semibold text-white">Liên hệ quản trị để được cấp</span>
+            {contactText ? `\n${contactText}` : ''}
+          </p>
         </div>
       </div>
     </div>

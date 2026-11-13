@@ -6,6 +6,7 @@ import type { UserProfile } from '../hooks/useAuthAndProfile';
 import type { ProviderModelOption, ProviderKey } from '../constants/aiModels';
 import { AppHeaderWithPending } from './layout/AppHeaderWithPending';
 import type { AppView } from './layout/AppHeader';
+import { StudioControls } from './layout/StudioControls';
 import { AppFooter } from './layout/AppFooter';
 import { trackEvent } from '../services/analyticsService';
 import { ga4FileDownload, ga4SelectContent } from '../utils/gtagEvent';
@@ -252,6 +253,17 @@ export const AppAuthenticatedShell: React.FC<AppAuthenticatedShellProps> = ({
     }
   }, [workspace.fullscreenImage, handleUseImageFromViewer]);
 
+  const studioControls = (
+    <StudioControls
+      currentView={workspace.currentView}
+      onViewChange={handleWorkspaceViewChange}
+      getProviderKey={getProviderKey}
+      selectedModelKey={getSelectedModelKey()}
+      availableModelOptions={availableModelOptions}
+      onModelPreferenceChange={onModelPreferenceChange}
+    />
+  );
+
   return (
     <>
       <Toaster position="top-right" richColors />
@@ -269,19 +281,12 @@ export const AppAuthenticatedShell: React.FC<AppAuthenticatedShellProps> = ({
           <AppHeaderWithPending
             user={user}
             userProfile={userProfile}
-            currentView={workspace.currentView}
-            onViewChange={handleWorkspaceViewChange}
             onSelectApiKey={onSelectApiKey}
             onPendingToastOpen={openAdminDashboard}
             onOpenAdminSettings={handleOpenAdminSettings}
             onOpenAdminUsers={handleOpenAdminUsers}
             onOpenAdminAnalytics={handleOpenAdminAnalytics}
             onPrefetchAdminDashboard={handlePrefetchAdminDashboard}
-            getEffectiveModel={getEffectiveModel}
-            getProviderKey={getProviderKey}
-            selectedModelKey={getSelectedModelKey()}
-            availableModelOptions={availableModelOptions}
-            onModelPreferenceChange={onModelPreferenceChange}
             onLogout={onLogout}
             onOpenSessions={handleOpenSessions}
             onLogoWorkspaceRefresh={workspace.handleLogoWorkspaceRefresh}
@@ -294,6 +299,7 @@ export const AppAuthenticatedShell: React.FC<AppAuthenticatedShellProps> = ({
             <Suspense fallback={<WorkspaceViewFallback />}>
               {workspace.currentView === 'create' ? (
                 <CreateView
+                  controls={studioControls}
                   prompts={workspace.prompts}
                   setPrompts={workspace.setPrompts}
                   promptOptions={workspace.promptOptions}
@@ -332,6 +338,7 @@ export const AppAuthenticatedShell: React.FC<AppAuthenticatedShellProps> = ({
                 />
               ) : workspace.currentView === 'multiple' ? (
                 <MultipleImage
+                  controls={studioControls}
                   image={workspace.image}
                   onImageSelect={workspace.handleImageSelect}
                   onImageRemove={workspace.handleImageRemove}
@@ -351,6 +358,7 @@ export const AppAuthenticatedShell: React.FC<AppAuthenticatedShellProps> = ({
               ) : (
                 <main className="flex min-h-0 flex-shrink-0 flex-col lg:flex-1 lg:overflow-hidden">
                   <MergeImage
+                    controls={studioControls}
                     onDownload={handleDownloadImage}
                     onFullscreen={workspace.setFullscreenImage}
                   />

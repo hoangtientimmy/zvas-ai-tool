@@ -10,11 +10,12 @@ import { AspectRatioSelector } from '../AspectRatioSelector';
 import { ImageSizeSelector } from '../ImageSizeSelector';
 
 interface MergeImageProps {
+  controls?: React.ReactNode;
   onDownload: (image: GeneratedImage) => void;
   onFullscreen: (image: GeneratedImage) => void;
 }
 
-function MergeImageComponent({ onDownload, onFullscreen }: MergeImageProps) {
+function MergeImageComponent({ controls, onDownload, onFullscreen }: MergeImageProps) {
   const [images, setImages] = useState<ImageFile[]>([]);
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -101,6 +102,11 @@ function MergeImageComponent({ onDownload, onFullscreen }: MergeImageProps) {
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden text-gray-100">
       <div className="custom-scrollbar flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="mx-auto max-w-4xl space-y-8">
+          {controls ? (
+            <section className="mx-auto max-w-md rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] p-3 sm:p-4">
+              {controls}
+            </section>
+          ) : null}
           <section className="space-y-4 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] p-5 sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight text-white sm:text-xl">

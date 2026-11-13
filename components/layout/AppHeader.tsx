@@ -1,35 +1,22 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo } from 'react';
 import type { User } from 'firebase/auth';
 import {
   BarChart3,
-  CircleHelp,
   Key,
-  LayoutGrid,
-  Layers2,
   LogOut,
   MonitorSmartphone,
   Settings,
   ShieldCheck,
   Sparkles,
 } from 'lucide-react';
-import type { ProviderModelOption, ProviderKey } from '../../constants/aiModels';
 import type { UserProfile } from '../../hooks/useAuthAndProfile';
-import { GeminiModelComparisonModal } from './GeminiModelComparisonModal';
-import { ga4SelectContent } from '../../utils/gtagEvent';
 
-export type AppView = 'create' | 'merge' | 'multiple';
-
-const VIEW_CONFIG: Record<AppView, { label: string; shortLabel: string; icon: typeof Sparkles }> = {
-  create: { label: 'Tạo ảnh', shortLabel: 'Tạo', icon: Sparkles },
-  merge: { label: 'Trộn ảnh', shortLabel: 'Trộn', icon: Layers2 },
-  multiple: { label: 'Hàng loạt', shortLabel: 'Loạt', icon: LayoutGrid },
-};
+// Tab chế độ + chọn model đã chuyển vào panel điều khiển (StudioControls).
+export type { AppView } from './StudioControls';
 
 export interface AppHeaderProps {
   user: User;
   userProfile: UserProfile | null;
-  currentView: AppView;
-  onViewChange: (view: AppView) => void;
   onSelectApiKey: () => void | Promise<void>;
   pendingUsersCount: number;
   onOpenAdminSettings: () => void;
@@ -38,11 +25,6 @@ export interface AppHeaderProps {
   onOpenAdminAnalytics: () => void;
   /** Preload dashboard chunk trên hover/focus để mở mượt lần đầu. */
   onPrefetchAdminDashboard: () => void;
-  getEffectiveModel: () => string;
-  getProviderKey: () => ProviderKey;
-  selectedModelKey: string;
-  availableModelOptions: ProviderModelOption[];
-  onModelPreferenceChange: (modelKey: string) => void;
   onLogout: () => void | Promise<void>;
   /** Mở trang/modal quản lý phiên đăng nhập đa thiết bị. */
   onOpenSessions?: () => void;
@@ -53,41 +35,24 @@ export interface AppHeaderProps {
 function AppHeaderComponent({
   user,
   userProfile,
-  currentView,
-  onViewChange,
   onSelectApiKey,
   pendingUsersCount,
   onOpenAdminSettings,
   onOpenAdminUsers,
   onOpenAdminAnalytics,
   onPrefetchAdminDashboard,
-  getEffectiveModel,
-  getProviderKey,
-  selectedModelKey,
-  availableModelOptions,
-  onModelPreferenceChange,
   onLogout,
   onOpenSessions,
   onLogoWorkspaceRefresh,
 }: AppHeaderProps) {
-  const [modelHelpOpen, setModelHelpOpen] = useState(false);
-  const handleNavViewClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      const raw = e.currentTarget.getAttribute('data-view');
-      if (raw === 'create' || raw === 'merge' || raw === 'multiple') {
-        onViewChange(raw);
-      }
-    },
-    [onViewChange]
-  );
 
   const showApiKeyButton =
     typeof window !== 'undefined' &&
     !!(window as Window & { aistudio?: { openSelectKey?: () => Promise<void> } }).aistudio?.openSelectKey;
 
   return (
-    <header className="z-20 flex flex-shrink-0 flex-col gap-2 border-b border-[var(--lp-border)] bg-[var(--lp-void)] px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-3">
-      <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
+    <header className="z-20 flex flex-shrink-0 items-center justify-between gap-3 border-b border-[var(--lp-border)] bg-[var(--lp-void)] px-3 py-2 sm:px-5 sm:py-3">
+      <div className="flex min-w-0 flex-1 items-center gap-6">
         <button
           type="button"
           onClick={onLogoWorkspaceRefresh}
@@ -102,49 +67,18 @@ function AppHeaderComponent({
             <h1 className="font-display truncate text-base font-bold tracking-tight text-[var(--lp-text)] sm:text-lg">
               AI Image ZVAS
             </h1>
-            <p className="hidden text-[11px] text-[var(--lp-muted)] sm:block">Studio tạo ảnh — chọn chế độ bên dưới</p>
+            <p className="hidden text-[11px] text-[var(--lp-muted)] sm:block">Studio tạo ảnh AI</p>
           </div>
         </button>
 
-        <nav
-          className="flex w-full items-center gap-1 rounded-full border border-[var(--lp-border)] bg-[var(--lp-surface)] p-1 sm:w-auto"
-          aria-label="Chế độ làm việc"
-        >
-          {(['create', 'merge', 'multiple'] as const).map((view) => {
-            const { label, shortLabel, icon: Icon } = VIEW_CONFIG[view];
-            const active = currentView === view;
-            return (
-              <button
-                key={view}
-                type="button"
-                data-view={view}
-                onClick={handleNavViewClick}
-                className={`flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-2 text-xs font-medium transition-all sm:flex-initial sm:px-3.5 sm:py-2 sm:text-sm ${
-                  active
-                    ? 'bg-[var(--mg-chip)] text-[var(--lp-text)]'
-                    : 'text-[var(--lp-muted)] hover:bg-[var(--lp-accent-dim)] hover:text-[var(--lp-text)]'
-                }`}
-              >
-                <Icon className="h-3.5 w-3.5 shrink-0 opacity-90 sm:h-4 sm:w-4" aria-hidden />
-                <span className="sm:hidden">{shortLabel}</span>
-                <span className="hidden sm:inline">{label}</span>
-              </button>
-            );
-          })}
-        </nav>
       </div>
 
       <div className="flex flex-shrink-0 items-center gap-1.5 sm:gap-2">
-        {/* Mobile: compact model name pill — model selector is hidden on mobile */}
-        <div className="mr-auto flex min-w-0 items-center gap-1 rounded-xl border border-[var(--lp-border)] bg-[var(--lp-accent-dim)] px-2 py-1.5 sm:hidden">
-          <span className="shrink-0 text-[10px] text-[var(--lp-muted)]">Model</span>
-          <span className="max-w-[80px] truncate text-[10px] font-medium text-[var(--lp-text)]">{getEffectiveModel()}</span>
-        </div>
         {showApiKeyButton && (
           <button
             type="button"
             onClick={() => void onSelectApiKey()}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-[var(--lp-border)] bg-[var(--lp-accent-dim)] text-[var(--lp-muted)] transition-colors hover:border-[var(--lp-border-strong)] hover:text-[var(--lp-accent)] sm:h-10 sm:w-10"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-[var(--lp-border)] bg-transparent text-[var(--lp-muted)] transition-colors hover:border-[var(--lp-border-strong)] hover:text-[var(--lp-accent)] sm:h-10 sm:w-10"
             title="Đổi API key"
           >
             <Key className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
@@ -157,7 +91,7 @@ function AppHeaderComponent({
               onClick={onOpenAdminSettings}
               onMouseEnter={onPrefetchAdminDashboard}
               onFocus={onPrefetchAdminDashboard}
-              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-[var(--lp-border)] bg-[var(--lp-accent-dim)] text-[var(--lp-muted)] transition-colors hover:text-[var(--lp-accent)] sm:h-10 sm:w-10"
+              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-[var(--lp-border)] bg-transparent text-[var(--lp-muted)] transition-colors hover:text-[var(--lp-accent)] sm:h-10 sm:w-10"
               title="Cấu hình hệ thống"
             >
               <Settings className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
@@ -192,41 +126,7 @@ function AppHeaderComponent({
           </button>
         )}
 
-        <div className="hidden items-center gap-2 rounded-xl border border-[var(--lp-border)] bg-[var(--lp-accent-dim)] px-2.5 py-1.5 sm:flex">
-          <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--lp-muted)]">Model</span>
-          <div className="flex items-center gap-1">
-            <select
-              value={selectedModelKey}
-              onChange={(e) => onModelPreferenceChange(e.target.value)}
-              className="max-w-[140px] cursor-pointer rounded-lg border border-[var(--lp-border)] bg-[var(--lp-ink)] px-2 py-1 text-xs text-[var(--lp-text)] outline-none transition focus:border-[var(--lp-border-strong)] focus:ring-2 focus:ring-[var(--lp-accent-dim)] md:max-w-[200px]"
-              aria-label="Chọn model tạo ảnh"
-            >
-              {availableModelOptions.map((option) => (
-                <option key={option.key} value={option.key}>
-                  {option.provider.toUpperCase()} · {option.label}
-                </option>
-              ))}
-            </select>
-            {getProviderKey() === 'gemini' && (
-              <button
-                type="button"
-                onClick={() => {
-                  ga4SelectContent('help', 'model_comparison');
-                  setModelHelpOpen(true);
-                }}
-                className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[var(--lp-border)] bg-[var(--lp-ink)] text-[var(--lp-muted)] transition hover:border-[var(--lp-border-strong)] hover:text-[var(--lp-accent)]"
-                title="So sánh Nano Banana 2.1 và Nano Banana Pro"
-                aria-label="Mở hướng dẫn so sánh model Gemini"
-              >
-                <CircleHelp className="h-4 w-4" aria-hidden />
-              </button>
-            )}
-          </div>
-        </div>
-
-        <GeminiModelComparisonModal open={modelHelpOpen} onClose={() => setModelHelpOpen(false)} />
-
-        <div className="flex items-center gap-2 rounded-full border border-[var(--lp-border)] bg-[var(--lp-surface-elevated)] py-1 pl-1 pr-2 sm:pr-3">
+        <div className="flex items-center gap-2 rounded-lg border border-[var(--lp-border)] bg-[var(--lp-surface-elevated)] py-1 pl-1 pr-2 sm:pr-3">
           <img
             src={user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || '?')}`}
             alt={user.displayName || ''}
@@ -242,7 +142,7 @@ function AppHeaderComponent({
           <button
             type="button"
             onClick={onOpenSessions}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-[var(--lp-border)] bg-[var(--lp-accent-dim)] text-[var(--lp-muted)] transition-colors hover:border-[var(--lp-border-strong)] hover:text-[var(--lp-accent)] sm:h-10 sm:w-10"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-[var(--lp-border)] bg-transparent text-[var(--lp-muted)] transition-colors hover:border-[var(--lp-border-strong)] hover:text-[var(--lp-accent)] sm:h-10 sm:w-10"
             title="Phiên đăng nhập"
             aria-label="Xem phiên đăng nhập"
           >
@@ -253,7 +153,7 @@ function AppHeaderComponent({
         <button
           type="button"
           onClick={() => void onLogout()}
-          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-[var(--lp-border)] bg-[var(--lp-accent-dim)] text-[var(--lp-muted)] transition-colors hover:border-red-500/40 hover:text-red-300 sm:h-10 sm:w-10"
+          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-[var(--lp-border)] bg-transparent text-[var(--lp-muted)] transition-colors hover:border-red-500/40 hover:text-red-300 sm:h-10 sm:w-10"
           title="Đăng xuất"
         >
           <LogOut className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />

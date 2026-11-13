@@ -9,6 +9,7 @@ import { HistoryDisplay } from '../results/HistoryDisplay';
 import { GenerationErrorAlert } from '../feedback/GenerationErrorAlert';
 
 interface MultipleImageProps {
+  controls?: React.ReactNode;
   image: ImageFile | null;
   onImageSelect: (file: File) => void;
   onImageRemove: () => void;
@@ -27,6 +28,7 @@ interface MultipleImageProps {
 }
 
 function MultipleImageComponent({
+  controls,
   image,
   onImageSelect,
   onImageRemove,
@@ -66,6 +68,11 @@ function MultipleImageComponent({
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row lg:overflow-hidden">
       <aside className="flex w-full flex-shrink-0 flex-col border-b border-[var(--lp-border)] bg-[var(--lp-void)] lg:h-full lg:w-[480px] lg:border-b-0 lg:border-r">
         <div className="custom-scrollbar flex-shrink-0 space-y-6 p-4 lg:flex-1 lg:overflow-y-auto">
+          {controls ? (
+            <section className="rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] p-3 sm:p-4">
+              {controls}
+            </section>
+          ) : null}
           {/* Image Upload Section */}
           <section>
             <h2 className="mb-3 text-sm font-semibold tracking-tight text-white">Hình ảnh gốc</h2>

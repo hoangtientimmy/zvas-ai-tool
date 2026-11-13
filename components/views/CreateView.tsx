@@ -20,6 +20,8 @@ type PromptOptionsState = {
 };
 
 export interface CreateViewProps {
+  /** Tab chế độ + chọn model — hiển thị chung khối với prompt. */
+  controls?: React.ReactNode;
   prompts: string[];
   setPrompts: React.Dispatch<React.SetStateAction<string[]>>;
   promptOptions: PromptOptionsState;
@@ -69,6 +71,7 @@ function readWelcomeDismissedFromStorage(): boolean {
 }
 
 function CreateViewComponent({
+  controls,
   prompts,
   setPrompts,
   promptOptions,
@@ -171,7 +174,11 @@ function CreateViewComponent({
           </div>
         )}
 
-        <PromptManager prompts={prompts} setPrompts={setPrompts} hasImage={!!image} />
+        <section className="space-y-4 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] p-3 sm:p-4">
+          {controls}
+          {controls ? <div className="h-px bg-[var(--lp-border)]" aria-hidden /> : null}
+          <PromptManager prompts={prompts} setPrompts={setPrompts} hasImage={!!image} />
+        </section>
 
         <PromptOptions
           options={promptOptions}

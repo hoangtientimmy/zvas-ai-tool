@@ -104,10 +104,19 @@ body {
   color: #aaaaaa;
 }
 
-/* Nút chính dạng viên thuốc */
+/* Hình dáng nút thống nhất theo nút "Đăng nhập" ở header: bo góc 8px.
+   Quy tắc không nằm trong @layer nên thắng các utility rounded-* của Tailwind —
+   mọi <button> (kể cả nút thêm sau này) có cùng dáng; màu giữ theo từng nút.
+   Ngoại lệ hiếm cần dáng khác: thêm class .mg-shape-free. */
+button:not(.mg-shape-free) {
+  border-radius: 8px;
+}
+
+/* Nút chính (Generate, Đăng nhập…) — màu xanh accent, chữ medium như nút header */
 .mg-btn-primary {
   background-color: var(--mg-accent);
   color: #fafafa;
+  font-weight: 500;
   transition: background-color 0.15s ease, transform 0.15s ease;
 }
 .mg-btn-primary:hover {
@@ -164,6 +173,20 @@ body {
   .landing-premium .lp-reveal.is-visible {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Lưới ảnh trong modal đăng nhập: cuộn chậm vô hạn (nội dung lặp 2 lần) */
+@keyframes mg-gallery-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-50% - 5px)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mg-gallery-up {
+    animation: mg-gallery-up 70s linear infinite;
+  }
+  .mg-gallery-down {
+    animation: mg-gallery-up 80s linear infinite reverse;
   }
 }
 

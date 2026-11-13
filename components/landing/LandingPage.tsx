@@ -190,17 +190,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
             </div>
           ) : null}
 
-          <nav aria-label="Breadcrumb" className="lp-anim-hero flex items-center gap-2 text-xs font-medium text-[var(--lp-text)]/80">
-            <span>ZVAS</span>
-            <span aria-hidden>/</span>
-            <span>Công cụ AI</span>
-            <span aria-hidden>/</span>
-            <span className="rounded-full bg-[var(--mg-chip)] px-3 py-[7px] text-xs font-semibold uppercase tracking-[0.02em] text-[var(--lp-text)]">
-              Studio tạo ảnh AI
-            </span>
-          </nav>
+          <span className="lp-anim-hero rounded-full bg-[var(--mg-chip)] px-3 py-[7px] text-xs font-semibold uppercase tracking-[0.02em] text-[var(--lp-text)]">
+            Studio tạo ảnh AI
+          </span>
 
-          <h1 className="lp-anim-hero lp-anim-hero-delay font-display mt-6 text-balance text-[2.9rem] font-bold leading-[0.96] tracking-[-0.03em] text-[#f5f5f5] sm:text-[4.5rem] lg:text-[5.5rem]">
+          <h1 className="lp-anim-hero lp-anim-hero-delay font-display mt-6 max-w-[22ch] text-balance text-[2.25rem] font-bold leading-[1.02] tracking-[-0.025em] text-[#f5f5f5] sm:text-[3.25rem] lg:text-[3.75rem]">
             Hình ảnh thương hiệu, tạo trong vài giây
           </h1>
           <p className="lp-anim-hero lp-anim-hero-delay mt-6 max-w-[40rem] text-pretty text-base leading-[1.55] text-[#f5f5f5]/[0.88] sm:text-lg">
@@ -237,13 +231,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
               </button>
             </div>
           </form>
-          <div className="mt-3 flex w-full max-w-[40rem] items-center justify-between gap-3 text-xs text-[var(--lp-muted)]">
-            <span>Tài khoản do quản trị cấp. Không cần thẻ thanh toán.</span>
-            <a href="#features" className="inline-flex items-center gap-1 text-[var(--lp-accent)] transition hover:text-white">
-              Xem team đang tạo gì
-              <ArrowRight className="h-3.5 w-3.5 rotate-90" aria-hidden />
-            </a>
-          </div>
+          <p className="mt-3 w-full max-w-[40rem] text-left text-xs text-[var(--lp-muted)]">Tài khoản do quản trị cấp. Không cần thẻ thanh toán.</p>
         </div>
       </section>
 
