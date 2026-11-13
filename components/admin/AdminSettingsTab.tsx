@@ -66,7 +66,7 @@ export const AdminSettingsTab: React.FC<AdminSettingsTabProps> = ({
               onClick={() => onToggleProvider(provider)}
               className={`rounded-xl border px-3 py-3 text-left transition ${
                 enabledProviders.includes(provider)
-                  ? 'border-cyan-500/60 bg-cyan-500/10 text-white shadow-[0_0_24px_-10px_rgba(34,211,238,0.45)]'
+                  ? 'border-cyan-500/60 bg-cyan-500/10 text-white shadow-[0_0_24px_-10px_rgba(79,105,242,0.45)]'
                   : 'border-white/10 bg-white/[0.02] text-gray-400 hover:border-white/25 hover:text-gray-200'
               }`}
             >

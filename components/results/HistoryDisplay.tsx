@@ -1,4 +1,5 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
+import { ConfirmDialog } from '../ui/ConfirmDialog';
 import type { GeneratedImage } from '../../types';
 import { SparklesIcon } from '../icons/SparklesIcon';
 import { DownloadIcon } from '../icons/DownloadIcon';
@@ -12,6 +13,7 @@ interface HistoryDisplayProps {
 }
 
 function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, onClear }: HistoryDisplayProps) {
+  const [confirmClear, setConfirmClear] = useState(false);
   if (images.length === 0) {
     return (
         <div className="h-full px-4 pb-4">
@@ -27,8 +29,9 @@ function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, 
       <div className="mb-2.5 flex items-center justify-between px-4">
         <span className="text-xs font-semibold uppercase tracking-[0.04em] text-[var(--lp-muted)]">Gần đây (10 hình mới nhất)</span>
         {onClear ? (
-            <button 
-                onClick={onClear}
+            <button
+                type="button"
+                onClick={() => setConfirmClear(true)}
                 className="px-2 py-1 text-xs font-semibold uppercase tracking-[0.04em] text-[var(--lp-muted)] transition-colors hover:bg-white/[0.05] hover:text-red-300"
             >
                 Xóa lịch sử
@@ -73,6 +76,19 @@ function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, 
           </div>
         ))}
       </div>
+      {onClear ? (
+        <ConfirmDialog
+          open={confirmClear}
+          title="Xóa toàn bộ lịch sử?"
+          description={`${images.length} ảnh trong lịch sử của bạn sẽ bị xóa vĩnh viễn và không thể khôi phục. Ảnh đã tải về máy không bị ảnh hưởng.`}
+          confirmLabel="Xóa lịch sử"
+          onConfirm={() => {
+            setConfirmClear(false);
+            onClear();
+          }}
+          onCancel={() => setConfirmClear(false)}
+        />
+      ) : null}
     </div>
   );
 }

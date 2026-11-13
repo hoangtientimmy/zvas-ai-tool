@@ -7,8 +7,8 @@ export const TREND_METRIC_CONFIG: Record<
   TrendMetric,
   { label: string; range: '30d' | '8w'; color: string }
 > = {
-  generations: { label: 'Generations per day (last 30 days)', range: '30d', color: '#22d3ee' },
-  activeUsers: { label: 'Active users per week (last 8 weeks)', range: '8w', color: '#818cf8' },
+  generations: { label: 'Generations per day (last 30 days)', range: '30d', color: '#8093f6' },
+  activeUsers: { label: 'Active users per week (last 8 weeks)', range: '8w', color: '#c084fc' },
   cost: { label: 'Cost per day (last 30 days)', range: '30d', color: '#f59e0b' },
 };
 

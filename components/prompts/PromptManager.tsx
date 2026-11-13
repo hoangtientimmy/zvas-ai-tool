@@ -1,9 +1,10 @@
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { PlusIcon } from '../icons/PlusIcon';
 import { TrashIcon } from '../icons/TrashIcon';
 import { Dices } from 'lucide-react';
 import { generateRandomPrompt } from '../../utils/promptGenerator';
+import { ConfirmDialog } from '../ui/ConfirmDialog';
 
 interface PromptManagerProps {
   prompts: string[];
@@ -26,6 +27,18 @@ export const PromptManager: React.FC<PromptManagerProps> = React.memo(({ prompts
   const removePrompt = useCallback((index: number) => {
     setPrompts((prev) => prev.filter((_, i) => i !== index));
   }, [setPrompts]);
+
+  // Mô tả đã có nội dung → hỏi lại trước khi xóa; mô tả trống thì xóa luôn.
+  const [pendingRemove, setPendingRemove] = useState<number | null>(null);
+  const requestRemove = useCallback((index: number) => {
+    if (prompts[index]?.trim()) setPendingRemove(index);
+    else removePrompt(index);
+  }, [prompts, removePrompt]);
+  const cancelRemove = useCallback(() => setPendingRemove(null), []);
+  const confirmRemove = useCallback(() => {
+    if (pendingRemove !== null) removePrompt(pendingRemove);
+    setPendingRemove(null);
+  }, [pendingRemove, removePrompt]);
 
   const updatePrompt = useCallback((index: number, value: string) => {
     setPrompts((prev) => {
@@ -64,9 +77,11 @@ export const PromptManager: React.FC<PromptManagerProps> = React.memo(({ prompts
             />
             {prompts.length > 1 && (
                 <button
-                onClick={() => removePrompt(index)}
+                type="button"
+                onClick={() => requestRemove(index)}
                 className="absolute top-3 right-2 p-1 rounded-md text-gray-400 hover:text-red-400 transition-colors"
-                aria-label="Remove prompt"
+                aria-label={`Xóa mô tả ${index + 1}`}
+                title="Xóa mô tả"
                 >
                 <TrashIcon className="w-5 h-5" />
                 </button>
@@ -81,6 +96,21 @@ export const PromptManager: React.FC<PromptManagerProps> = React.memo(({ prompts
         <PlusIcon className="w-4 h-4 mr-1" />
         <span>Thêm mô tả</span>
       </button>
+      <ConfirmDialog
+        open={pendingRemove !== null}
+        title="Xóa mô tả này?"
+        description={
+          pendingRemove !== null ? (
+            <>
+              <p className="line-clamp-3 italic text-[var(--lp-text)]/80">{`“${(prompts[pendingRemove] ?? '').trim().slice(0, 120)}${(prompts[pendingRemove] ?? '').trim().length > 120 ? '…' : ''}”`}</p>
+              <p className="mt-2">Nội dung mô tả sẽ bị xóa khỏi danh sách.</p>
+            </>
+          ) : null
+        }
+        confirmLabel="Xóa mô tả"
+        onConfirm={confirmRemove}
+        onCancel={cancelRemove}
+      />
     </div>
   );
 });

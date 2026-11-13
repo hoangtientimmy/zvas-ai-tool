@@ -115,7 +115,7 @@ export const LatencyCard = ({
         <div className="w-24 h-12 min-w-0">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <LineChart data={sparklineData}>
-              <Line type="monotone" dataKey="value" stroke="#22d3ee" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="value" stroke="#8093f6" strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>

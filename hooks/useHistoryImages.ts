@@ -83,7 +83,8 @@ export function useHistoryImages(user: User | null) {
   }, [user?.uid, fetchHistory]);
 
   const handleClearHistory = useCallback(async () => {
-    if (!user || !window.confirm('Bạn có chắc chắn muốn xóa toàn bộ lịch sử?')) return;
+    // Xác nhận do UI xử lý (ConfirmDialog trong HistoryDisplay).
+    if (!user) return;
     const path = 'history';
     try {
       const deletedIds = await clearHistoryByUser(user.uid);
