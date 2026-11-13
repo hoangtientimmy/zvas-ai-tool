@@ -60,6 +60,15 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
             type="month"
             value={data.monthKey}
             onChange={(e) => data.setMonthKey(e.target.value)}
+            // Bấm vào bất kỳ đâu trên ô (không chỉ icon lịch) đều mở bảng chọn tháng.
+            // showPicker có thể bị trình duyệt từ chối (vd. trang nhúng iframe) → bỏ qua.
+            onClick={(e) => {
+              try {
+                e.currentTarget.showPicker?.();
+              } catch {
+                /* trình duyệt không cho mở picker bằng script */
+              }
+            }}
             className="h-10 cursor-pointer rounded-xl border border-white/10 bg-[var(--lp-ink)] pl-3 pr-3 text-sm text-white outline-none transition hover:border-white/25 focus:border-white/40"
           />
           <button
