@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { HERO_IMAGE, shuffledSamples } from '../../lib/sampleImages';
 import {
   ArrowRight,
   BarChart3,
@@ -24,7 +25,8 @@ export interface LandingPageProps {
  * Accent (locked): teal (--lp-accent) only. Photographic tiles carry their own
  * colour; no second UI accent anywhere on the page.
  *
- * Imagery below uses picsum.photos placeholders standing in for real generated
+ * Imagery: ảnh mẫu nội bộ (lib/sampleImages — thumbnail thư viện style + ảnh OG), xáo ngẫu
+ * nhiên mỗi lần tải trang; thay bằng ảnh do studio tạo khi có. (Cũ: picsum placeholders standing in for real generated
  * outputs. Swap the seeds for actual sample renders before launch.
  */
 
@@ -51,7 +53,7 @@ const VALUE_PROPS = [
     icon: Sparkles,
     title: 'Biến brief thành visual',
     body: 'Từ mô tả ngắn tới bộ biến thể quảng cáo, một luồng làm việc chung cho marketing và design.',
-    image: 'https://picsum.photos/seed/zvas-brief-visual/1100/900',
+    image: null,
   },
   {
     icon: Layers,
@@ -63,7 +65,7 @@ const VALUE_PROPS = [
     icon: Palette,
     title: 'Style có kiểm soát',
     body: 'Thư viện phong cách cùng tùy chọn nền và viền, giữ output nhất quán với brand.',
-    image: 'https://picsum.photos/seed/zvas-style-control/700/520',
+    image: null,
   },
 ];
 
@@ -83,10 +85,6 @@ const STEPS = [
     title: 'Đo lường và lặp',
     desc: 'Xem lịch sử cá nhân; admin theo dõi analytics và chi phí theo thời gian thực.',
   },
-];
-
-const SAMPLE_STRIP = [
-  'zvas-s1', 'zvas-s2', 'zvas-s3', 'zvas-s4', 'zvas-s5', 'zvas-s6', 'zvas-s7', 'zvas-s8', 'zvas-s9',
 ];
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionNotice }) => {
@@ -125,6 +123,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
   }, []);
 
   const [draftPrompt, setDraftPrompt] = useState('');
+  // 9 ảnh dải mẫu + 4 ảnh lưới card lớn + 3 ảnh card Style — xáo mỗi lần tải trang.
+  const samples = useMemo(() => shuffledSamples(16), []);
 
   return (
     <div
@@ -168,13 +168,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
       {/* Hero — ảnh nền full-bleed + lớp tối, nội dung căn giữa */}
       <section className="relative isolate overflow-hidden">
         <img
-          src="https://picsum.photos/seed/zvas-hero-landscape/1920/1200"
+          src={HERO_IMAGE}
           alt=""
           aria-hidden
           className="absolute inset-0 -z-10 h-full w-full object-cover"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 -z-10 bg-black/55" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-black/65" aria-hidden />
         <div
           className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-[var(--lp-void)]"
           aria-hidden
@@ -239,10 +239,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
       <section className="relative pb-6">
         <h2 className="mg-eyebrow text-center">Các team sáng tạo đang tạo ảnh theo cách này</h2>
         <div className="mt-6 flex gap-3 overflow-hidden px-3 [mask-image:linear-gradient(90deg,transparent,black_6%,black_94%,transparent)]">
-          {SAMPLE_STRIP.map((seed) => (
-            <div key={seed} className="aspect-[4/5] w-44 shrink-0 overflow-hidden rounded-2xl sm:w-56">
+          {samples.slice(0, 9).map((src, i) => (
+            <div key={i} className="aspect-[4/5] w-44 shrink-0 overflow-hidden rounded-2xl sm:w-56">
               <img
-                src={`https://picsum.photos/seed/${seed}/560/700`}
+                src={src}
                 alt="Ảnh mẫu tạo bởi studio ZVAS"
                 loading="lazy"
                 decoding="async"
@@ -283,13 +283,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
 
           <div className="lp-reveal mt-12 grid gap-4 md:grid-cols-3 md:grid-rows-2">
             <article className="group relative flex min-h-[20rem] flex-col justify-end overflow-hidden rounded-3xl md:col-span-2 md:row-span-2">
-              <img
-                src={VALUE_PROPS[0].image ?? ''}
-                alt="Bộ biến thể quảng cáo tạo từ một brief"
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
-              />
+              {/* Lưới 2×2 ảnh mẫu: thumbnail nhỏ ghép lại thay vì phóng to một ảnh (tránh mờ) */}
+              <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-1 transition duration-700 group-hover:scale-[1.03]" aria-hidden>
+                {samples.slice(9, 13).map((src, i) => (
+                  <img key={i} src={src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                ))}
+              </div>
               <div
                 className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,16,16,0)_35%,rgba(16,16,16,0.92)_100%)]"
                 aria-hidden
@@ -308,14 +307,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
             </article>
 
             <article className="flex flex-col overflow-hidden rounded-3xl border border-[var(--lp-border)] bg-[var(--lp-surface)]">
-              <div className="h-32 overflow-hidden">
-                <img
-                  src={VALUE_PROPS[2].image ?? ''}
-                  alt="Thư viện phong cách nhất quán với brand"
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover"
-                />
+              <div className="grid h-32 grid-cols-3 gap-1 overflow-hidden" aria-hidden>
+                {samples.slice(13, 16).map((src, i) => (
+                  <img key={i} src={src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                ))}
               </div>
               <div className="flex flex-1 flex-col p-7 pt-5">
                 <p className="mg-eyebrow">03 · Style</p>

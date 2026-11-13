@@ -1,30 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import { shuffledSamples } from '../../lib/sampleImages';
 import { X } from 'lucide-react';
 import { resolveLoginEmail } from '../../utils/authCredentials';
 import { useLoginContactText } from '../../hooks/usePublicSettings';
 
-type GalleryTile = { seed: string; w: number; h: number; ratio: string };
-
-/** Ảnh mẫu cho cột trái (placeholder picsum — thay bằng ảnh thật do studio tạo). */
-const LOGIN_GALLERY: GalleryTile[][] = [
-  [
-    { seed: 'zvas-login-a1', w: 480, h: 640, ratio: 'aspect-[3/4]' },
-    { seed: 'zvas-login-a2', w: 480, h: 640, ratio: 'aspect-[3/4]' },
-    { seed: 'zvas-login-a3', w: 480, h: 480, ratio: 'aspect-square' },
-    { seed: 'zvas-login-a4', w: 480, h: 640, ratio: 'aspect-[3/4]' },
-  ],
-  [
-    { seed: 'zvas-login-b1', w: 480, h: 480, ratio: 'aspect-square' },
-    { seed: 'zvas-login-b2', w: 480, h: 640, ratio: 'aspect-[3/4]' },
-    { seed: 'zvas-login-b3', w: 480, h: 640, ratio: 'aspect-[3/4]' },
-    { seed: 'zvas-login-b4', w: 480, h: 400, ratio: 'aspect-[6/5]' },
-  ],
-  [
-    { seed: 'zvas-login-c1', w: 480, h: 400, ratio: 'aspect-[6/5]' },
-    { seed: 'zvas-login-c2', w: 480, h: 640, ratio: 'aspect-[3/4]' },
-    { seed: 'zvas-login-c3', w: 480, h: 640, ratio: 'aspect-[3/4]' },
-    { seed: 'zvas-login-c4', w: 480, h: 480, ratio: 'aspect-square' },
-  ],
+/** Tỉ lệ khung cho 3 cột ảnh (ảnh lấy ngẫu nhiên từ ảnh mẫu nội bộ). */
+const GALLERY_RATIOS: string[][] = [
+  ['aspect-[3/4]', 'aspect-[3/4]', 'aspect-square', 'aspect-[3/4]'],
+  ['aspect-square', 'aspect-[3/4]', 'aspect-[3/4]', 'aspect-[6/5]'],
+  ['aspect-[6/5]', 'aspect-[3/4]', 'aspect-[3/4]', 'aspect-square'],
 ];
 
 export interface LoginModalProps {
@@ -45,6 +29,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const contactText = useLoginContactText(open);
+  // Xáo lại mỗi lần mở modal.
+  const gallery = useMemo(() => {
+    const pics = shuffledSamples(12);
+    return GALLERY_RATIOS.map((col, ci) => col.map((ratio, ti) => ({ ratio, src: pics[ci * 4 + ti] })));
+  }, [open]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -83,13 +72,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         {/* Lưới ảnh mẫu — 3 cột chạy chậm ngược chiều nhau */}
         <div className="relative hidden overflow-hidden py-0 pl-3 md:block" aria-hidden>
           <div className="grid h-full grid-cols-3 gap-2.5">
-            {LOGIN_GALLERY.map((col, ci) => (
+            {gallery.map((col, ci) => (
               <div key={ci} className="relative overflow-hidden">
                 <div className={`flex flex-col gap-2.5 ${ci === 1 ? 'mg-gallery-down' : 'mg-gallery-up'}`}>
                   {[...col, ...col].map((tile, ti) => (
                     <div key={ti} className={`overflow-hidden rounded-2xl ${tile.ratio}`}>
                       <img
-                        src={`https://picsum.photos/seed/${tile.seed}/${tile.w}/${tile.h}`}
+                        src={tile.src}
                         alt=""
                         loading="lazy"
                         decoding="async"
