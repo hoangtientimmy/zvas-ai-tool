@@ -59,7 +59,7 @@ export const AdminDashboardHeader: React.FC<AdminDashboardHeaderProps> = ({
       <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
         {!analyticsOnly && (
           <div
-            className="flex w-full items-center gap-1 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-1 sm:w-auto"
+            className="flex w-full items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.03] p-1 sm:w-auto"
             role="tablist"
             aria-label="Mục dashboard"
           >
@@ -76,7 +76,7 @@ export const AdminDashboardHeader: React.FC<AdminDashboardHeaderProps> = ({
                 role="tab"
                 aria-selected={activeTab === id}
                 onClick={() => onTabChange(id)}
-                className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-all sm:flex-initial sm:px-4 ${
+                className={`mg-shape-free flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 text-sm font-medium transition-all sm:flex-initial sm:px-4 ${
                   activeTab === id
                     ? 'bg-gradient-to-r from-cyan-500/25 to-blue-600/20 text-white shadow-[0_0_20px_-8px_rgba(34,211,238,0.5)] ring-1 ring-cyan-500/30'
                     : 'text-gray-400 hover:bg-white/[0.04] hover:text-gray-200'

@@ -107,7 +107,7 @@ body {
 /* Hình dáng nút thống nhất theo nút "Đăng nhập" ở header: bo góc 8px.
    Quy tắc không nằm trong @layer nên thắng các utility rounded-* của Tailwind —
    mọi <button> (kể cả nút thêm sau này) có cùng dáng; màu giữ theo từng nút.
-   Ngoại lệ hiếm cần dáng khác: thêm class .mg-shape-free. */
+   Ngoại lệ: tab / chip lọc giữ dáng tròn (pill) — thêm class .mg-shape-free. */
 button:not(.mg-shape-free) {
   border-radius: 8px;
 }

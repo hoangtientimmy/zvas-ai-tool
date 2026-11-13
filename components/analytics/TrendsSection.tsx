@@ -27,13 +27,13 @@ const TrendsChart = ({
     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 backdrop-blur-sm">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-lg font-semibold tracking-tight text-white">Xu hướng</h3>
-        <div className="inline-flex rounded-xl border border-white/10 bg-white/[0.04] p-1">
+        <div className="inline-flex rounded-full border border-white/10 bg-white/[0.04] p-1">
           {(Object.keys(TREND_METRIC_CONFIG) as TrendMetric[]).map((metric) => (
             <button
               key={metric}
               type="button"
               onClick={() => onMetricChange(metric)}
-              className={`rounded-lg px-3 py-1.5 text-xs transition-all sm:text-sm ${
+              className={`mg-shape-free rounded-full px-3 py-1.5 text-xs transition-all sm:text-sm ${
                 activeMetric === metric
                   ? 'bg-gradient-to-r from-cyan-500/30 to-blue-600/25 font-medium text-white ring-1 ring-cyan-500/30'
                   : 'text-gray-400 hover:bg-white/[0.06] hover:text-gray-200'

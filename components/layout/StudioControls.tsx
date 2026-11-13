@@ -45,7 +45,7 @@ function StudioControlsComponent({
   return (
     <div className="space-y-3">
       <nav
-        className="grid grid-cols-3 gap-1 rounded-xl border border-[var(--lp-border)] bg-[var(--lp-ink)] p-1"
+        className="grid grid-cols-3 gap-1 rounded-full border border-[var(--lp-border)] bg-[var(--lp-ink)] p-1"
         aria-label="Chế độ làm việc"
       >
         {(['create', 'merge', 'multiple'] as const).map((view) => {
@@ -58,7 +58,7 @@ function StudioControlsComponent({
               data-view={view}
               onClick={handleTabClick}
               aria-current={active ? 'page' : undefined}
-              className={`flex cursor-pointer items-center justify-center gap-1.5 rounded-full px-2 py-2 text-[13px] font-medium transition-colors ${
+              className={`mg-shape-free flex cursor-pointer items-center justify-center gap-1.5 rounded-full px-2 py-2 text-[13px] font-medium transition-colors ${
                 active
                   ? 'bg-[var(--mg-chip)] text-[var(--lp-text)]'
                   : 'text-[var(--lp-muted)] hover:bg-white/[0.05] hover:text-[var(--lp-text)]'

@@ -27,7 +27,7 @@ function thumbnailFor(id: string): string | undefined {
 const CATEGORIES = getStyleGuideCategories(STYLE_GUIDE_ITEMS);
 
 function chipClass(active: boolean): string {
-  return `inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lp-accent)] ${
+  return `mg-shape-free inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lp-accent)] ${
     active
       ? 'border-[var(--lp-border-strong)] bg-[var(--lp-accent-dim)] text-[var(--lp-accent)]'
       : 'border-[var(--lp-border)] text-[var(--lp-muted)] hover:border-[var(--lp-border-strong)] hover:text-[var(--lp-text)]'
