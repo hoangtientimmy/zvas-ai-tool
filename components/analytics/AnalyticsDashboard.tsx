@@ -60,7 +60,7 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
             type="month"
             value={data.monthKey}
             onChange={(e) => data.setMonthKey(e.target.value)}
-            className="rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-white outline-none transition focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20"
+            className="h-10 cursor-pointer rounded-xl border border-white/10 bg-[var(--lp-ink)] pl-3 pr-3 text-sm text-white outline-none transition hover:border-white/25 focus:border-white/40"
           />
           <button
             type="button"

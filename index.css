@@ -75,6 +75,10 @@
   --mg-accent-hover: #5f77f4;
   --mg-accent-active: #3f57e0;
   --mg-chip: rgba(245, 245, 245, 0.14);
+
+  /* Toàn app là giao diện tối → điều khiển gốc của trình duyệt (icon lịch, popup
+     chọn ngày, thanh cuộn) cũng vẽ theo tông tối. */
+  color-scheme: dark;
 }
 
 html {
@@ -127,6 +131,26 @@ select:not([multiple]):not([size]) {
 select:not([multiple]):not([size]) option {
   background-color: #1a1a1a;
   color: #f5f5f5;
+}
+
+/* Ô ngày/tháng: icon lịch cùng màu & cỡ với chevron của dropdown */
+input[type="month"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="week"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  padding: 0;
+  cursor: pointer;
+  opacity: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23aaaaaa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+}
+input[type="month"]:hover::-webkit-calendar-picker-indicator,
+input[type="date"]:hover::-webkit-calendar-picker-indicator,
+input[type="week"]:hover::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]:hover::-webkit-calendar-picker-indicator {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E");
 }
 
 /* Nút chính (Generate, Đăng nhập…) — màu xanh accent, chữ medium như nút header */
