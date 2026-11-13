@@ -1,6 +1,7 @@
 
 import React, { useState, useCallback, useEffect, useRef, memo } from 'react';
-import { Upload, X, Sparkle, Sparkles, Image as ImageIcon, Loader2, Download, Maximize2 } from 'lucide-react';
+import { AiSparkIcon } from '../icons/AiSparkIcon';
+import { Upload, X, Sparkles, Image as ImageIcon, Loader2, Download, Maximize2 } from 'lucide-react';
 import type { ImageFile, GeneratedImage, ImageSize } from '../../types';
 import { generateImageVariations } from '../../services/geminiService';
 import { describeApiOrNetworkError } from '../../utils/userFacingError';
@@ -201,7 +202,7 @@ function MergeImageComponent({ controls, onDownload, onFullscreen }: MergeImageP
                 </>
               ) : (
                 <>
-                  <Sparkle className="h-5 w-5 shrink-0" fill="currentColor" strokeWidth={1.5} aria-hidden />
+                  <AiSparkIcon className="h-5 w-5 shrink-0" />
                   Trộn &amp; tạo ảnh
                 </>
               )}

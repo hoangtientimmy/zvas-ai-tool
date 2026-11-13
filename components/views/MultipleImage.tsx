@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, memo } from 'react';
-import { Sparkle } from 'lucide-react';
+import { AiSparkIcon } from '../icons/AiSparkIcon';
 import { ImageUploader } from '../inputs/ImageUploader';
 import { ImageFile, GeneratedImage } from '../../types';
 import { TrashIcon } from '../icons/TrashIcon';
@@ -151,7 +151,7 @@ function MultipleImageComponent({
               </>
             ) : (
               <>
-                <Sparkle className="mr-2 h-5 w-5 shrink-0" fill="currentColor" strokeWidth={1.5} aria-hidden />
+                <AiSparkIcon className="mr-2 h-5 w-5 shrink-0" />
                 Tạo nhiều biến thể
               </>
             )}

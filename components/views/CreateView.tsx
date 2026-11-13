@@ -1,5 +1,6 @@
 import React, { useState, useCallback, memo, useEffect, useRef } from 'react';
-import { Sparkle, Sparkles, X } from 'lucide-react';
+import { AiSparkIcon } from '../icons/AiSparkIcon';
+import { Sparkles, X } from 'lucide-react';
 import type { ImageFile, GeneratedImage, ImageSize } from '../../types';
 import { ImageUploader } from '../inputs/ImageUploader';
 import { ReferenceImageUploader } from '../inputs/ReferenceImageUploader';
@@ -242,7 +243,7 @@ function CreateViewComponent({
             </>
           ) : (
             <>
-              <Sparkle className="mr-2 h-5 w-5 shrink-0" fill="currentColor" strokeWidth={1.5} aria-hidden />
+              <AiSparkIcon className="mr-2 h-5 w-5 shrink-0" />
               Tạo ảnh
             </>
           )}

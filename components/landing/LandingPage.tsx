@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { AiSparkIcon } from '../icons/AiSparkIcon';
 import { HERO_IMAGE, shuffledSamples } from '../../lib/sampleImages';
 import {
   ArrowRight,
@@ -7,7 +8,6 @@ import {
   LogIn,
   Palette,
   ShieldCheck,
-  Sparkle,
   Sparkles,
   Zap,
 } from 'lucide-react';
@@ -228,7 +228,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
                 type="submit"
                 className="mg-btn-primary inline-flex h-10 items-center gap-2 rounded-full pl-[18px] pr-[22px] text-[14.5px] font-semibold"
               >
-                <Sparkle className="h-4 w-4 shrink-0" fill="currentColor" strokeWidth={1.5} aria-hidden />
+                <AiSparkIcon className="h-4 w-4 shrink-0" />
                 Tạo ảnh
               </button>
             </div>
