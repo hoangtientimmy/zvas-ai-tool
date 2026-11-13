@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import type { User } from 'firebase/auth';
+import { Avatar } from '../ui/Avatar';
 import {
   BarChart3,
   Key,
@@ -127,12 +128,7 @@ function AppHeaderComponent({
         )}
 
         <div className="flex items-center gap-2 rounded-lg border border-[var(--lp-border)] bg-[var(--lp-surface-elevated)] py-1 pl-1 pr-2 sm:pr-3">
-          <img
-            src={user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || '?')}`}
-            alt={user.displayName || ''}
-            className="h-7 w-7 rounded-full border border-[var(--lp-border-strong)] object-cover ring-2 ring-[var(--lp-accent-dim)] sm:h-8 sm:w-8"
-            referrerPolicy="no-referrer"
-          />
+          <Avatar name={user.displayName || user.email || '?'} photoURL={user.photoURL} className="h-7 w-7 text-[11px] sm:h-8 sm:w-8" />
           <span className="hidden max-w-[100px] truncate text-xs font-medium text-[var(--lp-text)] md:inline">
             {user.displayName}
           </span>

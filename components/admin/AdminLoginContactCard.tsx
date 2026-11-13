@@ -17,7 +17,7 @@ export const AdminLoginContactCard: React.FC<AdminLoginContactCardProps> = ({
 }) => (
   <section className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--lp-surface)] p-5 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.55)] backdrop-blur-sm sm:p-8">
     <div className="mb-5 flex items-start gap-4">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/20 to-blue-600/10">
+      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06]">
         <Contact className="h-7 w-7 text-cyan-200" />
       </div>
       <div>
@@ -55,7 +55,7 @@ export const AdminLoginContactCard: React.FC<AdminLoginContactCardProps> = ({
       type="button"
       onClick={onSave}
       disabled={isSaving}
-      className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl border border-cyan-500/35 bg-cyan-500/10 px-8 py-3 font-semibold text-cyan-100 transition hover:bg-cyan-500/15 disabled:cursor-not-allowed disabled:opacity-50"
+      className="mg-btn-primary mt-5 flex w-full items-center justify-center gap-2 px-8 py-3 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {isSaving ? 'Đang lưu...' : 'Lưu thông tin liên hệ'}
     </button>

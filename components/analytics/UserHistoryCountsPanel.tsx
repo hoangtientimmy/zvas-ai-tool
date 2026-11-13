@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Avatar } from '../ui/Avatar';
 import { db, collection, getDocs } from '../../firebase';
 import { Clock, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
@@ -114,7 +115,7 @@ export const UserHistoryCountsPanel: React.FC<{ monthKey: string }> = ({ monthKe
       <div className="flex flex-col gap-3 border-b border-white/[0.08] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="flex items-center gap-2 text-lg font-semibold tracking-tight text-white">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-cyan-500/20 bg-cyan-500/10">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06]">
               <ImageIcon className="h-4 w-4 text-cyan-300" aria-hidden />
             </span>
             Số ảnh đã tạo theo người dùng
@@ -160,15 +161,7 @@ export const UserHistoryCountsPanel: React.FC<{ monthKey: string }> = ({ monthKe
                 <tr key={user.uid} className="transition-colors hover:bg-white/[0.03]">
                   <td className="px-5 py-3 whitespace-nowrap">
                     <div className="flex items-center gap-3 min-w-0">
-                      <img
-                        src={
-                          user.photoURL ||
-                          `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}`
-                        }
-                        alt=""
-                        className="h-9 w-9 shrink-0 rounded-full border border-white/10 object-cover ring-1 ring-white/5"
-                        referrerPolicy="no-referrer"
-                      />
+                      <Avatar name={user.displayName || user.email} photoURL={user.photoURL} className="h-9 w-9 text-xs" />
                       <div className="flex flex-col min-w-0">
                         <span className="text-sm font-medium text-white truncate">
                           {user.displayName || '—'}

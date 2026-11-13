@@ -174,7 +174,7 @@ function MultipleImageComponent({
         </div>
 
         {/* History Section */}
-        <div className="h-32 flex-shrink-0 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] pt-3">
+        <div className="h-40 flex-shrink-0 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] pt-3.5">
           <HistoryDisplay 
             images={historyImages} 
             onImageSelect={onFullscreen}

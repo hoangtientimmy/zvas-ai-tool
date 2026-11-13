@@ -41,7 +41,7 @@ export const AdminSettingsTab: React.FC<AdminSettingsTabProps> = ({
 }) => (
   <section className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--lp-surface)] p-5 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.55)] backdrop-blur-sm sm:p-8">
     <div className="mb-6 flex items-start gap-4">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/20 to-blue-600/10">
+      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06]">
         <Shield className="h-7 w-7 text-cyan-200" />
       </div>
       <div>

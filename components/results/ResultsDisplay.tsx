@@ -134,7 +134,7 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   if (!originalImage && !isLoading && generatedImages.length === 0) {
     return (
       <div className="flex h-full min-h-[240px] flex-col items-center justify-center gap-4 p-6 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/[0.08] bg-gradient-to-br from-cyan-500/10 to-blue-600/5 text-cyan-300/50">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04] text-cyan-300/50">
           <SparklesIcon className="h-8 w-8" />
         </div>
         <div className="max-w-xs space-y-1">

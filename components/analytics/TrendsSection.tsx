@@ -35,7 +35,7 @@ const TrendsChart = ({
               onClick={() => onMetricChange(metric)}
               className={`mg-shape-free rounded-full px-3 py-1.5 text-xs transition-all sm:text-sm ${
                 activeMetric === metric
-                  ? 'bg-gradient-to-r from-cyan-500/30 to-blue-600/25 font-medium text-white ring-1 ring-cyan-500/30'
+                  ? 'bg-[var(--mg-chip)] font-medium text-white'
                   : 'text-gray-400 hover:bg-white/[0.06] hover:text-gray-200'
               }`}
             >

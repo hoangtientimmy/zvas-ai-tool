@@ -37,7 +37,7 @@ export const AdminDashboardHeader: React.FC<AdminDashboardHeaderProps> = ({
         </button>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-cyan-500/20 bg-cyan-500/10">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06]">
               {analyticsOnly ? (
                 <BarChart3 className="h-4 w-4 text-cyan-300" aria-hidden />
               ) : (
@@ -78,7 +78,7 @@ export const AdminDashboardHeader: React.FC<AdminDashboardHeaderProps> = ({
                 onClick={() => onTabChange(id)}
                 className={`mg-shape-free flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 text-sm font-medium transition-all sm:flex-initial sm:px-4 ${
                   activeTab === id
-                    ? 'bg-gradient-to-r from-cyan-500/25 to-blue-600/20 text-white shadow-[0_0_20px_-8px_rgba(34,211,238,0.5)] ring-1 ring-cyan-500/30'
+                    ? 'bg-[var(--mg-chip)] text-white'
                     : 'text-gray-400 hover:bg-white/[0.04] hover:text-gray-200'
                 }`}
               >

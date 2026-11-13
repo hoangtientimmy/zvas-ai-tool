@@ -14,30 +14,32 @@ interface HistoryDisplayProps {
 function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, onClear }: HistoryDisplayProps) {
   if (images.length === 0) {
     return (
-        <div className="h-full flex items-center justify-center border-2 border-dashed border-gray-800 rounded-lg opacity-30">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-500">Lịch sử trống</span>
+        <div className="h-full px-4 pb-4">
+          <div className="flex h-full items-center justify-center rounded-xl border border-dashed border-white/10">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.04em] text-[var(--lp-faint)]">Lịch sử trống</span>
+          </div>
         </div>
     );
   }
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between mb-1 px-1">
-        <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Gần đây (10 hình mới nhất)</span>
+      <div className="mb-2.5 flex items-center justify-between px-4">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.04em] text-[var(--lp-muted)]">Gần đây (10 hình mới nhất)</span>
         {onClear ? (
             <button 
                 onClick={onClear}
-                className="text-[10px] text-gray-500 hover:text-red-400 uppercase font-bold tracking-tighter transition-colors"
+                className="px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.04em] text-[var(--lp-muted)] transition-colors hover:bg-white/[0.05] hover:text-red-300"
             >
                 Xóa lịch sử
             </button>
         ) : null}
       </div>
-      <div className="flex-1 flex space-x-3 overflow-x-auto custom-scrollbar pb-2 px-1">
+      <div className="custom-scrollbar flex min-h-0 flex-1 gap-2.5 overflow-x-auto px-4 pb-4">
         {images.map((image, index) => (
           <div 
             key={`${image.imageUrl}-${image.prompt}`}
-            className="flex-shrink-0 group relative w-24 h-full bg-black rounded-md overflow-hidden border border-gray-700 hover:border-cyan-500 transition-all cursor-pointer shadow-lg [content-visibility:auto] [contain-intrinsic-size:96px_64px]"
+            className="flex-shrink-0 group relative aspect-square h-full bg-black rounded-lg overflow-hidden border border-white/10 hover:border-white/40 transition-all cursor-pointer [content-visibility:auto] [contain-intrinsic-size:96px_64px]"
           >
             <img 
                 src={image.imageUrl} 
@@ -65,7 +67,7 @@ function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, 
             </div>
             
             {/* Index Badge */}
-            <div className="absolute top-0.5 left-0.5 bg-black/50 px-1 rounded text-[8px] font-bold text-gray-400">
+            <div className="absolute left-1 top-1 rounded bg-black/60 px-1 text-[9px] font-semibold text-gray-300">
                 #{index + 1}
             </div>
           </div>

@@ -37,7 +37,7 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="flex items-center gap-2 text-xl font-semibold tracking-tight text-white">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-500/25 bg-cyan-500/10">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06]">
               <BarChart3 className="h-5 w-5 text-cyan-300" aria-hidden />
             </span>
             Tổng quan analytics

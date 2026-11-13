@@ -156,7 +156,7 @@ function CreateViewComponent({
       <div className="custom-scrollbar flex-shrink-0 space-y-4 p-4 lg:flex-1 lg:overflow-y-auto">
         {!welcomeDismissed && (
           <div className="flex items-start gap-3 rounded-2xl border border-[var(--lp-border)] bg-[var(--lp-surface)] px-3 py-2.5 sm:px-4">
-            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-cyan-500/25 bg-cyan-500/10">
+            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06]">
               <Sparkles className="h-4 w-4 text-cyan-200" aria-hidden />
             </span>
             <p className="min-w-0 flex-1 text-xs leading-relaxed text-gray-400 sm:text-sm">
@@ -267,7 +267,7 @@ function CreateViewComponent({
         />
       </div>
 
-      <div className="h-32 flex-shrink-0 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] pt-3">
+      <div className="h-40 flex-shrink-0 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] pt-3.5">
         <HistoryDisplay
           images={historyImages}
           onImageSelect={onFullscreen}

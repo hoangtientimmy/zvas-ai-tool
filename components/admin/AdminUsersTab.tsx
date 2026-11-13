@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Avatar } from '../ui/Avatar';
 import {
   BarChart3,
   CheckCircle,
@@ -72,7 +73,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
     <section>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-500/15 to-blue-600/10">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06]">
             <User className="h-5 w-5 text-cyan-200" />
           </div>
           <div>
@@ -86,7 +87,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
           <button
             type="button"
             onClick={() => setShowCreateModal(true)}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-cyan-500/15 px-3 py-2 text-xs font-medium text-cyan-200 transition hover:bg-cyan-500/25"
+            className="mg-btn-primary inline-flex shrink-0 items-center justify-center gap-2 px-3 py-2 text-xs font-medium"
           >
             <Plus className="h-3.5 w-3.5" aria-hidden />
             Tạo tài khoản
@@ -134,15 +135,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                   <tr key={user.uid} className="transition-colors hover:bg-white/[0.03]">
                     <td className="whitespace-nowrap px-5 py-4">
                       <div className="flex items-center gap-3">
-                        <img
-                          src={
-                            user.photoURL ||
-                            `https://ui-avatars.com/api/?name=${user.displayName || user.email}`
-                          }
-                          alt={user.displayName}
-                          className="h-10 w-10 rounded-full border border-white/10 object-cover ring-2 ring-white/5"
-                          referrerPolicy="no-referrer"
-                        />
+                        <Avatar name={user.displayName || user.username || user.email} photoURL={user.photoURL} className="h-10 w-10 text-sm" />
                         <div className="flex flex-col">
                           <span className="text-sm font-medium text-white">{user.displayName}</span>
                           <span className="text-xs text-gray-500">{user.username || user.email}</span>
@@ -308,7 +301,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-400 disabled:opacity-50"
+                  className="mg-btn-primary px-4 py-2 text-sm disabled:opacity-50"
                 >
                   {isSubmitting ? 'Đang tạo…' : 'Tạo tài khoản'}
                 </button>
