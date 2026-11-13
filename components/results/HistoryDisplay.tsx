@@ -57,7 +57,7 @@ function HistoryDisplayInner({ images, onImageSelect, onUseAsInput, onDownload, 
                 </button>
                 <button 
                     onClick={(e) => { e.stopPropagation(); onDownload(image); }}
-                    className="p-1.5 bg-gray-700 rounded-full text-white hover:bg-gray-600 transform hover:scale-110 transition-all"
+                    className="p-1.5 bg-[var(--mg-chip)] rounded-full text-white hover:bg-white/25 transform hover:scale-110 transition-all"
                     title="Tải xuống JPG"
                 >
                     <DownloadIcon className="w-3 h-3" />

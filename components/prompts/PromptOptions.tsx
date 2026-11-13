@@ -39,9 +39,9 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
     <div className="w-full">
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-2">
-             <label className="col-span-2 text-base font-bold text-gray-400 uppercase tracking-wider">Style & Background</label>
+             <label className="col-span-2 mg-eyebrow">Style & Background</label>
             
-            <div className="flex items-stretch overflow-hidden rounded-md border border-gray-600 bg-gray-700 text-base transition-colors hover:border-cyan-500 focus-within:border-cyan-500">
+            <div className="flex items-stretch overflow-hidden rounded-xl border border-[var(--lp-border)] bg-[var(--lp-ink)] text-base transition-colors hover:border-cyan-500 focus-within:border-cyan-500">
                 <button
                     type="button"
                     onClick={onShowStyleGuide}
@@ -69,7 +69,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                 id="backgroundStyle"
                 value={backgroundStyle}
                 onChange={(e) => onBackgroundChange(e.target.value)}
-                className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate"
+                className="w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate"
                 >
                 <option value="none">Mặc định</option>
                 <option value="black">Nền Đen</option>
@@ -81,13 +81,13 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
 
         {/* Outline Section */}
         <div className="space-y-1.5">
-            <label className="text-base font-bold text-gray-400 uppercase tracking-wider">Viền Chủ Thể (Outline)</label>
+            <label className="mg-eyebrow">Viền Chủ Thể (Outline)</label>
             <div className="grid grid-cols-2 gap-2">
                 <div className="relative w-full">
                     <select
                         value={outlineType}
                         onChange={(e) => onOutlineTypeChange(e.target.value as any)}
-                        className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate"
+                        className="w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate"
                     >
                         <option value="none">Không viền</option>
                         <option value="white">Viền Trắng</option>
@@ -99,7 +99,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                         value={outlineThickness}
                         disabled={outlineType === 'none'}
                         onChange={(e) => onOutlineThicknessChange(e.target.value as any)}
-                        className={`w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate ${outlineType === 'none' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl px-3 py-2 text-base text-gray-300 focus:border-cyan-500 outline-none appearance-none truncate ${outlineType === 'none' ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         <option value="thin">Mỏng</option>
                         <option value="normal">Vừa</option>
@@ -111,7 +111,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
 
         {/* Simplify Checkbox Row */}
         <div className="grid grid-cols-2 gap-2">
-            <label className="flex items-center space-x-3 p-2 rounded border border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
+            <label className="flex items-center space-x-3 p-2 rounded-xl border border-[var(--lp-border)] hover:bg-white/[0.04] cursor-pointer transition-colors">
                 <input
                     type="checkbox"
                     checked={options.styleSimplified}
@@ -121,7 +121,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                 <span className="text-sm text-gray-300 font-medium">Đơn giản hóa</span>
             </label>
             {backgroundStyle === 'transparent' ? (
-              <div className="flex flex-col gap-2 p-2 rounded border border-cyan-700/60 bg-cyan-900/10">
+              <div className="flex flex-col gap-2 p-2 rounded-xl border border-cyan-500/30 bg-cyan-500/[0.06]">
                 <label className="flex items-center space-x-3 cursor-pointer transition-colors">
                     <input
                         type="checkbox"
@@ -137,7 +137,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                     value={options.backgroundRemovalStrength}
                     onChange={(e) => onBackgroundRemovalStrengthChange(e.target.value as 'soft' | 'strong')}
                     disabled={!options.forceRemoveBackground}
-                    className={`bg-gray-800 border border-gray-600 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-cyan-500 ${
+                    className={`bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-cyan-500 ${
                       !options.forceRemoveBackground ? 'opacity-50 cursor-not-allowed' : ''
                     }`}
                   >
@@ -147,7 +147,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                 </div>
               </div>
             ) : (
-              <div className="p-2 rounded border border-gray-800 text-[11px] text-gray-500 flex items-center">
+              <div className="p-2 rounded-xl border border-[var(--lp-border)] text-[11px] text-gray-500 flex items-center">
                 Bật nền trong suốt để dùng Force remove background.
               </div>
             )}
@@ -156,7 +156,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
         {/* Keep Style Row */}
         <div className="border-t border-gray-700 pt-2 mt-0.5">
           <div className="grid grid-cols-2 gap-2">
-            <label className={`flex items-center space-x-2 p-2 rounded border border-gray-700 transition-colors ${hasStartImage ? 'hover:bg-gray-700/50 cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}>
+            <label className={`flex items-center space-x-2 p-2 rounded-xl border border-[var(--lp-border)] transition-colors ${hasStartImage ? 'hover:bg-gray-700/50 cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}>
                 <input
                     type="checkbox"
                     checked={options.keepStartImageStyle}
@@ -167,7 +167,7 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
                 <span className="text-[11px] text-gray-300 font-bold uppercase leading-tight">Giữ style ảnh gốc</span>
             </label>
 
-            <label className={`flex items-center space-x-2 p-2.5 rounded border border-gray-700 transition-colors ${hasReferenceImages ? 'hover:bg-gray-700/50 cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}>
+            <label className={`flex items-center space-x-2 p-2.5 rounded-xl border border-[var(--lp-border)] transition-colors ${hasReferenceImages ? 'hover:bg-gray-700/50 cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}>
                 <input
                     type="checkbox"
                     checked={options.keepStyle}

@@ -86,7 +86,7 @@ function AppHeaderComponent({
     !!(window as Window & { aistudio?: { openSelectKey?: () => Promise<void> } }).aistudio?.openSelectKey;
 
   return (
-    <header className="z-20 flex flex-shrink-0 flex-col gap-2 border-b border-[var(--lp-border)] bg-[var(--lp-surface)] px-3 py-2 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-3">
+    <header className="z-20 flex flex-shrink-0 flex-col gap-2 border-b border-[var(--lp-border)] bg-[var(--lp-void)] px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-3">
       <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
         <button
           type="button"
@@ -95,20 +95,19 @@ function AppHeaderComponent({
           aria-label="Làm mới vùng làm việc"
           title="Xóa prompt, ảnh đang chọn và tùy chọn style — giữ đăng nhập và dữ liệu analytics"
         >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[var(--lp-border-strong)] bg-[var(--lp-accent-dim)] shadow-[0_0_22px_-8px_var(--lp-accent-glow)] transition-transform group-hover/brand:scale-[1.02]">
-            <Sparkles className="h-4 w-4 text-[var(--lp-accent)]" aria-hidden />
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[var(--lp-void)] transition-transform group-hover/brand:scale-[1.02]">
+            <Sparkles className="h-4 w-4" aria-hidden />
           </span>
           <div className="min-w-0 leading-tight">
-            <h1 className="font-display truncate text-base font-semibold tracking-tight text-[var(--lp-text)] sm:text-lg">
-              AI Image{' '}
-              <span className="text-[var(--lp-accent)]">ZVAS</span>
+            <h1 className="font-display truncate text-base font-bold tracking-tight text-[var(--lp-text)] sm:text-lg">
+              AI Image ZVAS
             </h1>
             <p className="hidden text-[11px] text-[var(--lp-muted)] sm:block">Studio tạo ảnh — chọn chế độ bên dưới</p>
           </div>
         </button>
 
         <nav
-          className="flex w-full items-center gap-1 rounded-2xl border border-[var(--lp-border)] bg-[var(--lp-surface)] p-1 sm:w-auto"
+          className="flex w-full items-center gap-1 rounded-full border border-[var(--lp-border)] bg-[var(--lp-surface)] p-1 sm:w-auto"
           aria-label="Chế độ làm việc"
         >
           {(['create', 'merge', 'multiple'] as const).map((view) => {
@@ -120,9 +119,9 @@ function AppHeaderComponent({
                 type="button"
                 data-view={view}
                 onClick={handleNavViewClick}
-                className={`flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-2.5 py-2 text-xs font-medium transition-all sm:flex-initial sm:px-3.5 sm:py-2 sm:text-sm ${
+                className={`flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-2 text-xs font-medium transition-all sm:flex-initial sm:px-3.5 sm:py-2 sm:text-sm ${
                   active
-                    ? 'bg-[var(--lp-accent-dim)] text-[var(--lp-text)] shadow-[0_0_22px_-12px_var(--lp-accent-glow)] ring-1 ring-[var(--lp-border-strong)]'
+                    ? 'bg-[var(--mg-chip)] text-[var(--lp-text)]'
                     : 'text-[var(--lp-muted)] hover:bg-[var(--lp-accent-dim)] hover:text-[var(--lp-text)]'
                 }`}
               >

@@ -85,7 +85,7 @@ function FullscreenViewerInner({ image, onClose, onDownload, onForceRemoveBackgr
             <div className="mt-8 pt-6 border-t border-gray-700 flex flex-col sm:flex-row gap-3">
                 <button
                     onClick={onDownload}
-                    className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors font-semibold"
+                    className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 bg-[var(--mg-chip)] hover:bg-white/25 rounded-full transition-colors font-semibold"
                 >
                     <DownloadIcon className="w-5 h-5" />
                     <span>Tải xuống</span>

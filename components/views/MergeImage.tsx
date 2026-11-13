@@ -101,7 +101,7 @@ function MergeImageComponent({ onDownload, onFullscreen }: MergeImageProps) {
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden text-gray-100">
       <div className="custom-scrollbar flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="mx-auto max-w-4xl space-y-8">
-          <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 sm:p-6">
+          <section className="space-y-4 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] p-5 sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight text-white sm:text-xl">
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-300">
@@ -156,7 +156,7 @@ function MergeImageComponent({ onDownload, onFullscreen }: MergeImageProps) {
             )}
           </section>
 
-          <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 sm:p-6">
+          <section className="space-y-4 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] p-5 sm:p-6">
             <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight text-white sm:text-xl">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/10 text-amber-200">
                 <Sparkles className="h-5 w-5" />
@@ -181,10 +181,10 @@ function MergeImageComponent({ onDownload, onFullscreen }: MergeImageProps) {
               type="button"
               onClick={handleGenerate}
               disabled={isLoading || images.length === 0 || !prompt.trim()}
-              className={`flex w-full max-w-md items-center justify-center gap-3 rounded-2xl py-4 text-lg font-semibold transition-all
+              className={`flex w-full max-w-md items-center justify-center gap-3 rounded-full py-4 text-lg font-semibold transition-all
                 ${isLoading || images.length === 0 || !prompt.trim()
-                  ? 'cursor-not-allowed bg-white/5 text-gray-600'
-                  : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20 hover:brightness-110 active:scale-[0.99]'
+                  ? 'cursor-not-allowed bg-white/[0.06] text-gray-500'
+                  : 'mg-btn-primary'
                 }
               `}
             >

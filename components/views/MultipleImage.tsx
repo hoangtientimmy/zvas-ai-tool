@@ -64,7 +64,7 @@ function MultipleImageComponent({
 
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row lg:overflow-hidden">
-      <aside className="flex w-full flex-shrink-0 flex-col border-b border-white/[0.08] bg-white/[0.03] backdrop-blur-sm lg:h-full lg:w-[480px] lg:border-b-0 lg:border-r">
+      <aside className="flex w-full flex-shrink-0 flex-col border-b border-[var(--lp-border)] bg-[var(--lp-void)] lg:h-full lg:w-[480px] lg:border-b-0 lg:border-r">
         <div className="custom-scrollbar flex-shrink-0 space-y-6 p-4 lg:flex-1 lg:overflow-y-auto">
           {/* Image Upload Section */}
           <section>
@@ -127,10 +127,10 @@ function MultipleImageComponent({
             type="button"
             onClick={onGenerate}
             disabled={isLoading || !image || prompts.slice(0, numImages).every((p) => !p.trim())}
-            className={`flex w-full items-center justify-center rounded-2xl px-4 py-3.5 text-base font-semibold transition-all duration-300 sm:py-4 sm:text-lg ${
+            className={`flex w-full items-center justify-center rounded-full px-4 py-3.5 text-base font-semibold transition-all duration-300 sm:py-4 sm:text-lg ${
               !isLoading && image && prompts.slice(0, numImages).some((p) => p.trim())
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20 hover:brightness-110 active:scale-[0.99]'
-                : 'cursor-not-allowed bg-white/5 text-gray-600'
+                ? 'mg-btn-primary'
+                : 'cursor-not-allowed bg-white/[0.06] text-gray-500'
             }`}
           >
             {isLoading ? (
@@ -154,7 +154,7 @@ function MultipleImageComponent({
           <h2 className="text-base font-semibold tracking-tight text-white sm:text-lg">Kết quả</h2>
           <p className="text-xs text-gray-500">Các biến thể từ cùng một ảnh gốc</p>
         </div>
-        <div className="mb-3 flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] lg:overflow-y-auto">
+        <div className="mb-3 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] lg:overflow-y-auto">
           <ResultsDisplay 
             originalImage={image} 
             generatedImages={generatedImages}
@@ -167,7 +167,7 @@ function MultipleImageComponent({
         </div>
 
         {/* History Section */}
-        <div className="h-32 flex-shrink-0 rounded-2xl border border-white/[0.06] bg-white/[0.02] pt-3">
+        <div className="h-32 flex-shrink-0 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] pt-3">
           <HistoryDisplay 
             images={historyImages} 
             onImageSelect={onFullscreen}

@@ -1,32 +1,125 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", "Outfit", ui-sans-serif, system-ui, sans-serif;
+  /* Typeface chính: Google Sans (Google Fonts, nạp trong index.html) */
+  --font-sans: "Google Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Google Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Magnific-style palette: một accent xanh (#4f69f2) thay cho cyan/teal,
+     xám trung tính (không ám xanh) cho nền/chữ. Ghi đè thang màu Tailwind để
+     toàn bộ class cyan-* / blue-* / gray-* / slate-* đổi theo một chỗ. */
+  --color-cyan-50: #eef1fe;
+  --color-cyan-100: #dfe4fd;
+  --color-cyan-200: #c4cdfb;
+  --color-cyan-300: #a3b0f9;
+  --color-cyan-400: #8093f6;
+  --color-cyan-500: #4f69f2;
+  --color-cyan-600: #3f57e0;
+  --color-cyan-700: #3446c0;
+  --color-cyan-800: #2c3a9b;
+  --color-cyan-900: #27337a;
+  --color-cyan-950: #181e48;
+
+  --color-blue-300: #a3b0f9;
+  --color-blue-400: #8093f6;
+  --color-blue-500: #5f77f4;
+  --color-blue-600: #4f69f2;
+  --color-blue-700: #3f57e0;
+
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #d0d0d0;
+  --color-gray-400: #aaaaaa;
+  --color-gray-500: #8a8a8a;
+  --color-gray-600: #626262;
+  --color-gray-700: #3d3d3d;
+  --color-gray-800: #262626;
+  --color-gray-900: #1a1a1a;
+  --color-gray-950: #101010;
+
+  --color-slate-50: #fafafa;
+  --color-slate-100: #f5f5f5;
+  --color-slate-200: #e5e5e5;
+  --color-slate-300: #d0d0d0;
+  --color-slate-400: #aaaaaa;
+  --color-slate-500: #8a8a8a;
+  --color-slate-600: #626262;
+  --color-slate-700: #3d3d3d;
+  --color-slate-800: #262626;
+  --color-slate-900: #1a1a1a;
+  --color-slate-950: #101010;
 }
 
-/* Premium studio tokens — shared by landing + authenticated app */
+/* Studio tokens (phong cách Magnific) — dùng chung cho landing + app.
+   Tên biến --lp-* giữ nguyên để không phải sửa component; chỉ đổi giá trị. */
 :root {
-  --lp-void: #020408;
-  --lp-ink: #050a12;
-  --lp-surface: rgba(10, 16, 26, 0.78);
-  --lp-surface-elevated: rgba(16, 24, 38, 0.92);
-  --lp-border: rgba(255, 255, 255, 0.07);
-  --lp-border-strong: rgba(45, 212, 191, 0.22);
-  --lp-accent: #5eead4;
-  --lp-accent-dim: rgba(94, 234, 212, 0.14);
-  --lp-accent-glow: rgba(45, 212, 191, 0.35);
-  --lp-glow-teal: rgba(34, 211, 238, 0.1);
-  --lp-glow-blue: rgba(59, 130, 246, 0.07);
-  --lp-text: #e2e8f0;
-  --lp-muted: #8b9cb3;
-  --lp-faint: #4a5d73;
+  --lp-void: #101010;            /* nền trang */
+  --lp-ink: #0b0b0b;             /* input / vùng chìm */
+  --lp-surface: #1a1a1a;         /* panel, card */
+  --lp-surface-elevated: #222222;
+  --lp-border: rgba(255, 255, 255, 0.1);
+  --lp-border-strong: rgba(255, 255, 255, 0.22);
+  --lp-accent: #8c9cff;          /* accent dạng chữ/icon (đủ tương phản trên nền tối) */
+  --lp-accent-dim: rgba(245, 245, 245, 0.07); /* chip / hover trung tính */
+  --lp-accent-glow: rgba(79, 105, 242, 0.32);
+  --lp-glow-teal: rgba(79, 105, 242, 0.05);
+  --lp-glow-blue: rgba(255, 255, 255, 0.015);
+  --lp-text: #f5f5f5;
+  --lp-muted: #aaaaaa;
+  --lp-faint: #6b6b6b;
+
+  /* Nút chính (Generate) — xanh đặc, bo tròn viên thuốc */
+  --mg-accent: #4f69f2;
+  --mg-accent-hover: #5f77f4;
+  --mg-accent-active: #3f57e0;
+  --mg-chip: rgba(245, 245, 245, 0.14);
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background-color: var(--lp-void);
   color: var(--lp-text);
+}
+
+/* Tiêu đề: đậm, khít chữ như Magnific */
+.font-display {
+  letter-spacing: -0.02em;
+}
+
+/* Nhãn nhỏ viết hoa (eyebrow) */
+.mg-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #aaaaaa;
+}
+
+/* Nút chính dạng viên thuốc */
+.mg-btn-primary {
+  background-color: var(--mg-accent);
+  color: #fafafa;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.mg-btn-primary:hover {
+  background-color: var(--mg-accent-hover);
+}
+.mg-btn-primary:active {
+  background-color: var(--mg-accent-active);
+  transform: scale(0.99);
+}
+.mg-btn-primary:focus-visible {
+  outline: 2px solid #a3b0f9;
+  outline-offset: 2px;
 }
 
 @keyframes landing-hero-in {
@@ -74,7 +167,9 @@ body {
   }
 }
 
+/* Phong cách phẳng: tắt lớp nhiễu hạt */
 .lp-grain {
+  display: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
 }
 

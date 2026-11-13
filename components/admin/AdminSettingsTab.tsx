@@ -201,7 +201,7 @@ export const AdminSettingsTab: React.FC<AdminSettingsTabProps> = ({
         <button
           onClick={onSaveSettings}
           disabled={isSavingSettings}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100"
+          className="mg-btn-primary flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 font-semibold disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isSavingSettings ? (
             <>

@@ -149,10 +149,10 @@ function CreateViewComponent({
       ))}
     </div>
 
-    <aside className={`w-full flex-shrink-0 flex-col border-b border-white/[0.08] bg-white/[0.03] backdrop-blur-sm lg:h-full lg:w-[480px] lg:border-b-0 lg:border-r ${mobileTab === 'output' ? 'hidden lg:flex' : 'flex'}`}>
+    <aside className={`w-full flex-shrink-0 flex-col border-b border-[var(--lp-border)] bg-[var(--lp-void)] lg:h-full lg:w-[480px] lg:border-b-0 lg:border-r ${mobileTab === 'output' ? 'hidden lg:flex' : 'flex'}`}>
       <div className="custom-scrollbar flex-shrink-0 space-y-4 p-4 lg:flex-1 lg:overflow-y-auto">
         {!welcomeDismissed && (
-          <div className="flex items-start gap-3 rounded-2xl border border-cyan-500/15 bg-cyan-500/[0.06] px-3 py-2.5 sm:px-4">
+          <div className="flex items-start gap-3 rounded-2xl border border-[var(--lp-border)] bg-[var(--lp-surface)] px-3 py-2.5 sm:px-4">
             <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-cyan-500/25 bg-cyan-500/10">
               <Sparkles className="h-4 w-4 text-cyan-200" aria-hidden />
             </span>
@@ -210,10 +210,10 @@ function CreateViewComponent({
           type="button"
           onClick={onGenerate}
           disabled={!canGenerate}
-          className={`flex w-full items-center justify-center rounded-2xl px-4 py-3.5 text-base font-semibold transition-all duration-300 sm:py-4 sm:text-lg ${
+          className={`flex w-full items-center justify-center rounded-full px-4 py-3.5 text-base font-semibold transition-all duration-300 sm:py-4 sm:text-lg ${
             canGenerate
-              ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20 hover:brightness-110 active:scale-[0.99]'
-              : 'cursor-not-allowed bg-white/5 text-gray-600'
+              ? 'mg-btn-primary'
+              : 'cursor-not-allowed bg-white/[0.06] text-gray-500'
           }`}
         >
           {isLoading ? (
@@ -248,7 +248,7 @@ function CreateViewComponent({
           <p className="text-xs text-gray-500">Xem trước, tải về hoặc dùng làm ảnh đầu vào</p>
         </div>
       </div>
-      <div className="mb-3 flex min-h-0 flex-shrink-0 flex-1 flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] lg:overflow-y-auto">
+      <div className="mb-3 flex min-h-0 flex-shrink-0 flex-1 flex-col overflow-hidden rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] lg:overflow-y-auto">
         <ResultsDisplay
           originalImage={image}
           generatedImages={generatedImages}
@@ -260,7 +260,7 @@ function CreateViewComponent({
         />
       </div>
 
-      <div className="h-32 flex-shrink-0 rounded-2xl border border-white/[0.06] bg-white/[0.02] pt-3">
+      <div className="h-32 flex-shrink-0 rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface)] pt-3">
         <HistoryDisplay
           images={historyImages}
           onImageSelect={onFullscreen}

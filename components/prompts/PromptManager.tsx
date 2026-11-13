@@ -42,7 +42,7 @@ export const PromptManager: React.FC<PromptManagerProps> = React.memo(({ prompts
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-1.5">
-        <h2 className="text-base font-bold text-gray-300 uppercase tracking-wider">Mô tả (Prompt)</h2>
+        <h2 className="mg-eyebrow">Mô tả (Prompt)</h2>
         <button
           onClick={handleRandomPrompt}
           className="flex items-center space-x-1 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-all bg-cyan-400/10 px-2 py-1 rounded-md border border-cyan-400/20 hover:border-cyan-400/40"
@@ -60,7 +60,7 @@ export const PromptManager: React.FC<PromptManagerProps> = React.memo(({ prompts
               onChange={(e) => updatePrompt(index, e.target.value)}
               placeholder={placeholderText}
               rows={5}
-              className="w-full bg-gray-700 border border-gray-600 rounded-md pl-3 pr-9 py-2 text-base focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all resize-none placeholder-gray-500"
+              className="w-full bg-[var(--lp-ink)] border border-[var(--lp-border)] rounded-xl pl-3 pr-9 py-2 text-base focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all resize-none placeholder-gray-500"
             />
             {prompts.length > 1 && (
                 <button
