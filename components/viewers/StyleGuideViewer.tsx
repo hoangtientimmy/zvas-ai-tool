@@ -29,7 +29,7 @@ const CATEGORIES = getStyleGuideCategories(STYLE_GUIDE_ITEMS);
 function chipClass(active: boolean): string {
   return `mg-shape-free inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lp-accent)] ${
     active
-      ? 'border-[var(--lp-border-strong)] bg-[var(--lp-accent-dim)] text-[var(--lp-accent)]'
+      ? 'border-white/30 bg-[var(--mg-chip)] text-white'
       : 'border-[var(--lp-border)] text-[var(--lp-muted)] hover:border-[var(--lp-border-strong)] hover:text-[var(--lp-text)]'
   }`;
 }
@@ -70,7 +70,7 @@ function StyleGuideViewerInner({ onClose, onStyleSelect, selectedStyle = '' }: S
       aria-describedby="style-guide-desc"
     >
       <div
-        className="relative flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-[var(--lp-border)] bg-[var(--lp-surface-elevated)] shadow-2xl"
+        className="relative flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-[20px] border border-[var(--lp-border)] bg-[var(--lp-surface-elevated)] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

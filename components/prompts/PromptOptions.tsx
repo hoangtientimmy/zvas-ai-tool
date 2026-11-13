@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { PaletteIcon } from '../icons/PaletteIcon';
+import { ChevronRight, Palette, X } from 'lucide-react';
 import { getStyleDisplayName } from '../../lib/styleGuide';
 
 interface PromptOptionsProps {
@@ -41,26 +41,28 @@ export const PromptOptions: React.FC<PromptOptionsProps> = ({
         <div className="grid grid-cols-2 gap-2">
              <label className="col-span-2 mg-eyebrow">Style & Background</label>
             
-            <div className="flex items-stretch overflow-hidden rounded-xl border border-[var(--lp-border)] bg-[var(--lp-ink)] text-base transition-colors hover:border-cyan-500 focus-within:border-cyan-500">
+            <div className="flex items-stretch overflow-hidden rounded-xl border border-[var(--lp-border)] bg-[var(--lp-ink)] text-base transition-colors hover:border-white/25 focus-within:border-white/40">
                 <button
                     type="button"
                     onClick={onShowStyleGuide}
-                    className="flex min-w-0 flex-1 cursor-pointer items-center justify-between px-3 py-2 text-left"
+                    className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 py-2 pl-3 pr-2 text-left"
                     title="Mở thư viện phong cách"
+                    aria-haspopup="dialog"
                 >
-                    <span className={`truncate ${selectedStyleName ? 'text-cyan-300' : 'text-gray-400'}`}>
+                    <Palette className={`h-4 w-4 shrink-0 ${selectedStyleName ? 'text-[var(--lp-accent)]' : 'text-[var(--lp-muted)]'}`} aria-hidden />
+                    <span className={`min-w-0 flex-1 truncate ${selectedStyleName ? 'text-[var(--lp-text)]' : 'text-gray-400'}`}>
                         {selectedStyleName || 'Chọn Style'}
                     </span>
-                    {!selectedStyleName && <PaletteIcon className="ml-1 h-5 w-5 flex-shrink-0" />}
+                    {!selectedStyleName && <ChevronRight className="h-4 w-4 shrink-0 text-[var(--lp-muted)]" aria-hidden />}
                 </button>
                 {selectedStyleName && (
                     <button
                         type="button"
                         onClick={() => onStyleChange('')}
-                        className="flex-shrink-0 cursor-pointer px-2 text-gray-400 hover:text-white"
+                        className="flex flex-shrink-0 cursor-pointer items-center px-3 text-gray-400 hover:text-white"
                         aria-label={`Bỏ chọn style ${selectedStyleName}`}
                         title="Bỏ chọn style"
-                    >×</button>
+                    ><X className="h-4 w-4" aria-hidden /></button>
                 )}
             </div>
             
