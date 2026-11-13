@@ -7,6 +7,7 @@ import {
   LogIn,
   Palette,
   ShieldCheck,
+  Sparkle,
   Sparkles,
   Zap,
 } from 'lucide-react';
@@ -225,8 +226,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, sessionN
               <span className="text-xs text-[var(--lp-muted)]">Cần đăng nhập để tạo ảnh</span>
               <button
                 type="submit"
-                className="mg-btn-primary inline-flex h-10 items-center gap-2 rounded-full px-[22px] text-[14.5px] font-semibold"
+                className="mg-btn-primary inline-flex h-10 items-center gap-2 rounded-full pl-[18px] pr-[22px] text-[14.5px] font-semibold"
               >
+                <Sparkle className="h-4 w-4 shrink-0" fill="currentColor" strokeWidth={1.5} aria-hidden />
                 Tạo ảnh
               </button>
             </div>

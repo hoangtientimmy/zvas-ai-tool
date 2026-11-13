@@ -1,5 +1,5 @@
 import React, { useState, useCallback, memo, useEffect, useRef } from 'react';
-import { Sparkles, X } from 'lucide-react';
+import { Sparkle, Sparkles, X } from 'lucide-react';
 import type { ImageFile, GeneratedImage, ImageSize } from '../../types';
 import { ImageUploader } from '../inputs/ImageUploader';
 import { ReferenceImageUploader } from '../inputs/ReferenceImageUploader';
@@ -241,7 +241,10 @@ function CreateViewComponent({
               Đang tạo ảnh…
             </>
           ) : (
-            'Tạo ảnh'
+            <>
+              <Sparkle className="mr-2 h-5 w-5 shrink-0" fill="currentColor" strokeWidth={1.5} aria-hidden />
+              Tạo ảnh
+            </>
           )}
         </button>
         <GenerationErrorAlert error={error} className="mt-4" />

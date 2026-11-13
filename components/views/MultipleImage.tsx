@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, memo } from 'react';
+import { Sparkle } from 'lucide-react';
 import { ImageUploader } from '../inputs/ImageUploader';
 import { ImageFile, GeneratedImage } from '../../types';
 import { TrashIcon } from '../icons/TrashIcon';
@@ -149,7 +150,10 @@ function MultipleImageComponent({
                 Đang tạo…
               </>
             ) : (
-              'Tạo nhiều biến thể'
+              <>
+                <Sparkle className="mr-2 h-5 w-5 shrink-0" fill="currentColor" strokeWidth={1.5} aria-hidden />
+                Tạo nhiều biến thể
+              </>
             )}
           </button>
           <GenerationErrorAlert error={error} className="mt-3 text-center" />
