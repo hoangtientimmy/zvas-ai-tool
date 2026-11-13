@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useState } from 'react';
-import { CircleHelp, LayoutGrid, Layers2, Sparkles } from 'lucide-react';
+import { ChevronDown, CircleHelp, LayoutGrid, Layers2, Sparkles } from 'lucide-react';
 import type { ProviderKey, ProviderModelOption } from '../../constants/aiModels';
 import { GeminiModelComparisonModal } from './GeminiModelComparisonModal';
 import { ga4SelectContent } from '../../utils/gtagEvent';
@@ -75,18 +75,24 @@ function StudioControlsComponent({
         <label htmlFor="studio-model-select" className="mg-eyebrow shrink-0 pl-1">
           Model
         </label>
-        <select
-          id="studio-model-select"
-          value={selectedModelKey}
-          onChange={(e) => onModelPreferenceChange(e.target.value)}
-          className="h-10 min-w-0 flex-1 cursor-pointer truncate rounded-xl border border-[var(--lp-border)] bg-[var(--lp-ink)] px-3 text-sm text-[var(--lp-text)] outline-none transition focus:border-[var(--lp-border-strong)]"
-        >
-          {availableModelOptions.map((option) => (
-            <option key={option.key} value={option.key}>
-              {option.provider.toUpperCase()} · {option.label}
-            </option>
-          ))}
-        </select>
+        <div className="relative min-w-0 flex-1">
+          <select
+            id="studio-model-select"
+            value={selectedModelKey}
+            onChange={(e) => onModelPreferenceChange(e.target.value)}
+            className="h-10 w-full cursor-pointer appearance-none truncate rounded-xl border border-[var(--lp-border)] bg-[var(--lp-ink)] pl-3 pr-10 text-sm text-[var(--lp-text)] outline-none transition hover:border-[var(--lp-border-strong)] focus:border-[var(--lp-border-strong)]"
+          >
+            {availableModelOptions.map((option) => (
+              <option key={option.key} value={option.key}>
+                {option.provider.toUpperCase()} · {option.label}
+              </option>
+            ))}
+          </select>
+          <ChevronDown
+            className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--lp-muted)]"
+            aria-hidden
+          />
+        </div>
         {getProviderKey() === 'gemini' && (
           <button
             type="button"
